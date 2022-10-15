@@ -1,0 +1,254 @@
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+--------------------Start program--------------------
+Size of file is: 40 bytes.
+Type_calloc: char
+Sizeof type: 4
+Calloc returned: 006A0E60
+
+buffer size: 40
+fread number of symbols: 39
+Num lines: 5
+Type_calloc: type_prop_line
+Sizeof type: 4
+Calloc returned: 006A0E90
+
+Type_calloc: int
+Sizeof type: 4
+Calloc returned: 006A0EC0
+
+Command found: push
+cmd_code: 1
+ptr_arg: 006A0E65, first sym to scan: 1
+simple-dimple
+Command found: pop
+cmd_code: 2
+ptr_arg: 006A0E6D, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 006A0E77, first sym to scan: r
+case d+rcx
+reg_num: 2
+
+Command found: out
+Command found: hlt
+elem of asm: 33
+elem of asm: 10
+elem of asm: 66
+elem of asm: 2
+elem of asm: 97
+elem of asm: 2
+elem of asm: 90
+elem of asm: 8
+Command found: push
+cmd_code: 1
+ptr_arg: 006A0E65, first sym to scan: 1
+simple-dimple
+Command found: pop
+cmd_code: 2
+ptr_arg: 006A0E6D, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 006A0E77, first sym to scan: r
+case d+rcx
+reg_num: 2
+
+Command found: out
+Command found: hlt
+elem of asm: 33
+elem of asm: 10
+elem of asm: 66
+elem of asm: 2
+elem of asm: 97
+elem of asm: 2
+elem of asm: 90
+elem of asm: 8
+written size: 8
+File is written successfully
+
+----------CPU----------
+stk1 created
+Lines read: 1
+sign read: MDA, sign cpu: MDA
+Size already read: 8
+Code was read
+ip: 0, Size: 8
+cmd_code: 33, cmd_code * mask: 1
+start push
+finish push
+
+
+++++++++++ Start Dump ++++++++++
+
+int Execute(CPU*, stack_t*) at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 71):
+Stack [0x006A0F10] 
+In int FuckingDump(stack_t*, const char*, const char*, int) (line 374):
+------
+| OK |
+------
+Originally 'stk1' from int Run() at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 25): 
+
+Pointer:              006A0F10
+Size:                 1
+Capacity:             10
+DeadInside:           0
+PtrStackLeftCannary:  006A0F08
+PtrStackRightCannary: 006A0F38
+StackHashSum:         1691098403
+StructHashSum:        -866333811
+
+StackLeftCannary:      dedfed15
+StackRightCannary:     ca115fa1
+{
+	 data[0] =          10 = 0000000A
+	 data[1] =           0 = 00000000
+	 data[2] =           0 = 00000000
+	 data[3] =           0 = 00000000
+	 data[4] =           0 = 00000000
+	 data[5] =           0 = 00000000
+	 data[6] =           0 = 00000000
+	 data[7] =           0 = 00000000
+	 data[8] =           0 = 00000000
+	 data[9] =           0 = 00000000
+}
+
+
+---------- Finish Dump ----------
+
+cmd_code: 66, cmd_code * mask: 2
+in pop
+pop done
+
+
+++++++++++ Start Dump ++++++++++
+
+int Execute(CPU*, stack_t*) at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 71):
+Stack [0x006A0F10] 
+In int FuckingDump(stack_t*, const char*, const char*, int) (line 374):
+------
+| OK |
+------
+Originally 'stk1' from int Run() at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 25): 
+
+Pointer:              006A0F10
+Size:                 0
+Capacity:             10
+DeadInside:           0
+PtrStackLeftCannary:  006A0F08
+PtrStackRightCannary: 006A0F38
+StackHashSum:         348344893
+StructHashSum:        -868775217
+
+StackLeftCannary:      dedfed15
+StackRightCannary:     ca115fa1
+{
+	 data[0] = -1163005939 = BAADF00D (POISONED)
+	 data[1] =           0 = 00000000
+	 data[2] =           0 = 00000000
+	 data[3] =           0 = 00000000
+	 data[4] =           0 = 00000000
+	 data[5] =           0 = 00000000
+	 data[6] =           0 = 00000000
+	 data[7] =           0 = 00000000
+	 data[8] =           0 = 00000000
+	 data[9] =           0 = 00000000
+}
+
+
+---------- Finish Dump ----------
+
+cmd_code: 97, cmd_code * mask: 1
+start push
+finish push
+
+
+++++++++++ Start Dump ++++++++++
+
+int Execute(CPU*, stack_t*) at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 71):
+Stack [0x006A0F10] 
+In int FuckingDump(stack_t*, const char*, const char*, int) (line 374):
+------
+| OK |
+------
+Originally 'stk1' from int Run() at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 25): 
+
+Pointer:              006A0F10
+Size:                 1
+Capacity:             10
+DeadInside:           0
+PtrStackLeftCannary:  006A0F08
+PtrStackRightCannary: 006A0F38
+StackHashSum:         271144509
+StructHashSum:        798408431
+
+StackLeftCannary:      dedfed15
+StackRightCannary:     ca115fa1
+{
+	 data[0] =         100 = 00000064
+	 data[1] =           0 = 00000000
+	 data[2] =           0 = 00000000
+	 data[3] =           0 = 00000000
+	 data[4] =           0 = 00000000
+	 data[5] =           0 = 00000000
+	 data[6] =           0 = 00000000
+	 data[7] =           0 = 00000000
+	 data[8] =           0 = 00000000
+	 data[9] =           0 = 00000000
+}
+
+
+---------- Finish Dump ----------
+
+cmd_code: 8, cmd_code * mask: 8
+in out
+
+
+++++++++++ Start Dump ++++++++++
+
+int Execute(CPU*, stack_t*) at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 71):
+Stack [0x006A0F10] 
+In int FuckingDump(stack_t*, const char*, const char*, int) (line 374):
+------
+| OK |
+------
+Originally 'stk1' from int Run() at D:\Programming\C\Ded_course_1_sem\Processor_v4\cpu.cpp (line 25): 
+
+Pointer:              006A0F10
+Size:                 0
+Capacity:             10
+DeadInside:           0
+PtrStackLeftCannary:  006A0F08
+PtrStackRightCannary: 006A0F38
+StackHashSum:         348344893
+StructHashSum:        -868775217
+
+StackLeftCannary:      dedfed15
+StackRightCannary:     ca115fa1
+{
+	 data[0] = -1163005939 = BAADF00D (POISONED)
+	 data[1] =           0 = 00000000
+	 data[2] =           0 = 00000000
+	 data[3] =           0 = 00000000
+	 data[4] =           0 = 00000000
+	 data[5] =           0 = 00000000
+	 data[6] =           0 = 00000000
+	 data[7] =           0 = 00000000
+	 data[8] =           0 = 00000000
+	 data[9] =           0 = 00000000
+}
+
+
+---------- Finish Dump ----------
+
+end of cycle
+Finish running
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+--------------------Finish program--------------------
