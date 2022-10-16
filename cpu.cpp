@@ -20,11 +20,15 @@ int Run()
 {
     log("\n----------CPU----------\n");
 
-    CPU cpu = {NULL, NULL, NULL, CPU_SIGNATURE, 0, 0};
-
     stack_t stk1 = StructStackInit(stk1);
 
+    stack_t stkCalls1 = StructStackInit(stk1);
+
     StackCtor(&stk1);
+
+    StackCtor(&stkCalls1);
+
+    CPU cpu = {NULL, NULL, NULL, CPU_SIGNATURE, 0, 0, &stk1, &stkCalls1};
 
     log("stk1 created\n");
 
@@ -32,7 +36,7 @@ int Run()
 
     log("Code was read\n");
 
-    if (Execute(&cpu, &stk1))
+    if (Execute(&cpu))
     {
         print_log(FRAMED, "EXECUTION ERROR");
     }
@@ -42,57 +46,170 @@ int Run()
     return 0;
 }
 
-int Execute(CPU* cpu, stack_t* stk)
+int Execute(CPU* cpu)
 {
     Assert(cpu == NULL);
+
+    stack_t* stk = cpu->Stk;
+
     Assert(stk == NULL);
 
     log("ip: %d, Size: %d\n", cpu->ip, cpu->Size);
 
     while (cpu->ip < cpu->Size)
     {
-        log("cmd_code: %d, cmd_code * mask: %d\n", cpu->code[cpu->ip],
-            cpu->code[cpu->ip] & CMD_MASK);
+        log("cmd_code wo mask: %d\n", cpu->code[cpu->ip]);
 
         switch(cpu->code[cpu->ip] & CMD_MASK)
         {
             #include "commands_for_cpu.h"
 
-        default:
+            default:
 
-            print_log(FRAMED, "COMMAND ERROR: Unexpected command");
+                print_log(FRAMED, "COMMAND ERROR: Unexpected command");
 
-            log("ERROR: Unexpected command, ip: %zd\n", cpu->ip);
+                log("ERROR: Unexpected command, ip: %zd\n", cpu->ip);
 
-            return UNDEFINED_CMD;
+                return UNDEFINED_CMD;
         }
 
         cpu->ip++;
-        StackDump(stk);
+
+        CPUDump(cpu);
     }
 
     log("end of cycle\n");
 
-
-
     #undef DEF_CMD
 
     return 0;
-
 }
+
+void CPUDumpEmExit()
+{
+    log("\n?????????? EMERGENCY FINISH [FULL MASTER] DUMP ??????????\n\n");
+}
+
+int FuckingCPUDump(CPU* cpu,
+                   const char* funcname,
+                   const char* filename,
+                   int         line)
+{
+    log("\n\n*********** Start [FULL MASTER] Dump **********\n");
+
+    if (cpu == NULL)
+    {
+        print_log(FRAMED, "POINTER ERROR: CPU pointer is NULL");
+
+        CPUDumpEmExit();
+
+        return -1;
+    }
+
+    if (funcname == NULL || filename == NULL || line == 0)
+    {
+        log("STACKDUMP CALL ERROR: StackDump can't recognize parameters of call\n");
+    }
+    else
+    {
+        log("\n%s at %s (line %d):\n", funcname, filename, line);
+    }
+
+    log("CPU struct at [0x%p]\n", cpu);
+
+    log("Signature:             %p\n"
+        "Code:                  %p\n"
+        "Size of code:          %d\n"
+        "Registers:             %p\n"
+        "RAM:                   %p\n"
+        "Stack:                 %p\n"
+        "Stack of Calls:        %p\n"
+        "Instruction Pointer:   %d\n",
+        cpu->signature,
+        cpu->code,
+        cpu->Size,
+        cpu->regs,
+        cpu->RAM,
+        cpu->Stk,
+        cpu->StkCalls,
+        cpu->ip);
+
+    size_t numbers_in_size = (size_t) ceil(log10 ((double) cpu->Size));
+
+    elem_t curr_elem = 0;
+
+    log("\n");
+
+    for (size_t i = 0; i < cpu->Size; i++)
+    {
+        curr_elem = (cpu->code)[i];
+
+        log("\t code[%0*d] = %11d = %x\n", numbers_in_size, i, curr_elem, curr_elem);
+    }
+
+    log("\n\n");
+
+    for (size_t i = 0; i < REG_SIZE; i++)
+    {
+        log("reg[%d] = %d\n", i, cpu->regs[i]);
+    }
+
+    StackDump(cpu->Stk);
+
+    log("\n---------- Finish [FULL MASTER] Dump ----------\n\n");
+
+    return 0;
+};
 
 void SkipNewLines()
 {
-    char ch = 0;
+    char sym = 0;
 
-    while((ch = getchar()) != '\n')            continue;
+    while((sym = getchar()) != '\n')            continue;
 }
 
-void PushArg(CPU* cpu, stack_t* stk)
+int PrintRAM(size_t format, CPU* cpu, size_t len_line)
+{
+    int* ptr_RAM = cpu->RAM;
+
+    switch (format)
+    {
+        case BIN_FORMAT:
+            log("start printing in BIN format");
+
+            for (size_t i = 0; i < RAM_SIZE; i++)
+            {
+                if (i % len_line == 0)     printf("\n");
+
+                if (ptr_RAM[i])            printf("%c", '#');
+
+                else                       printf("%c", ' ');
+            }
+            break;
+
+        case SYM_FORMAT:
+            for (size_t i = 0; i < RAM_SIZE; i++)
+            {
+                if (i % len_line == 0)     printf("\n");
+
+                printf("%c", ptr_RAM[i]);
+            }
+            break;
+
+        default:
+            print_log(FRAMED, "FORMAT ERROR: Unexpected format or printing RAM");
+    }
+
+    printf("\n");
+}
+
+void PushArg(CPU* cpu)
 {
     log("start push\n");
 
     size_t cmd_ip = cpu->ip++;
+
+    log("code of push: %d\n", cpu->code[cmd_ip]);
 
     if (cpu->code[cmd_ip] & ARG_RAM)
     {
@@ -108,69 +225,41 @@ void PushArg(CPU* cpu, stack_t* stk)
             index += cpu->code[cpu->ip++];
         }
 
-        StackPush(stk, cpu->RAM[index]);
+        StackPush(cpu->Stk, cpu->RAM[index]);
     }
     else
     {
-        int arg   = 0;
+        int arg = 0;
+
+        log("push wo RAM\n");
 
         if (cpu->code[cmd_ip] & ARG_REG)
         {
             arg += cpu->regs[cpu->code[(cpu->ip)++]];
         }
 
+        log("arg after push rcx: %d\n", arg);
+
         if (cpu->code[cmd_ip] & ARG_IMMED)
         {
             arg += cpu->code[cpu->ip++];
         }
 
-        StackPush(stk, arg);
+        StackPush(cpu->Stk, arg);
     }
 
     cpu->ip--;
 
-    //hueta
-    /*int shift = 0;
-
-    if (cpu->code[cpu->ip] & ARG_REG)
-    {
-        log("register in push\n");
-
-        arg += cpu->regs[cpu->code[cpu->ip + 1]];
-
-        shift++;
-    }
-
-    if (cpu->code[cpu->ip] & ARG_IMMED)
-    {
-        log("immediate in push\n");
-
-        arg += cpu->code[cpu->ip+1+shift];
-
-        shift++;
-    }
-
-    if (cpu->code[cpu->ip] & ARG_RAM)
-    {
-        log("ram in push\n");
-
-        arg = cpu->RAM[arg];
-    }
-
-    log("arg is %d\n", arg);
-
-    cpu->ip += shift;
-
-    StackPush(stk, arg); */
-
     log("finish push\n");
 }
 
-int PopArg(CPU* cpu, stack_t* stk)
+int PopArg(CPU* cpu)
 {
-    log("in pop\n");
+    log("start pop\n");
 
-    int arg = StackPop(stk);
+    int arg = StackPop(cpu->Stk);
+
+    log("cmd_code wo mask in pop: %d\n", cpu->code[cpu->ip]);
 
     size_t cmd_ip = cpu->ip++;
 
@@ -192,9 +281,15 @@ int PopArg(CPU* cpu, stack_t* stk)
     }
     else
     {
+        log("pop wo ram\n");
+
+        log("pop code: %d\n", cpu->code[cmd_ip]);
+
         if (cpu->code[cmd_ip] & ARG_REG)
         {
             cpu->regs[cpu->code[(cpu->ip)++]] = arg;
+
+            log("rcxing\n");
         }
 
         if (cpu->code[cmd_ip] & ARG_IMMED)
@@ -202,48 +297,10 @@ int PopArg(CPU* cpu, stack_t* stk)
             print_log(FRAMED, "SYNTAX ERROR: Invalid usage of function pop");
         }
     }
+
     cpu->ip--;
 
-    //hueta
-
-    /*if (cpu->code[ptr_cmd] & ARG_REG)
-    {
-        index += cpu->code[(cpu->ip)++];
-    }
-
-    if (cpu->code[ptr_cmd] & ARG_IMMED)
-    {
-        index += cpu->code[cpu->ip++];
-    }
-
-    if (cpu->code[cpu->ip] & ARG_RAM)
-    {
-        if (index >= RAM_SIZE)
-        {
-            print_log(FRAMED, "ERROR: invalid index of RAM");
-
-            return INVALID_MEM_INDEX;
-        }
-
-        cpu->RAM[index] = arg;
-
-    }
-    else
-    {
-        if (index >= REG_SIZE)
-        {
-            printf("ERROR: invalid index of REGS\n");
-
-            exit(INVALID_REG_INDEX);
-        }
-        cpu->regs[index] = arg;
-    }
-
-    cpu->ip += shift;
-    */
-
     log("pop done\n");
-
 }
 
 void CpuCtor(CPU* cpu)
@@ -262,7 +319,7 @@ int checkSign(CPU* cpu, FILE* file_asm)
 {
     char asm_sign[MAX_LEN_SIGN] = {};
 
-    int num_read_lines = fscanf(file_asm, "%s", asm_sign);
+    int num_read_lines = fscanf(file_asm, "%3s", asm_sign);
 
     log("Lines read: %d\n", num_read_lines);
 
@@ -284,9 +341,23 @@ int getCode(CPU* cpu)
 
     Assert(file_asm == NULL);
 
+    printf("ftell: %d\n", ftell(file_asm));
+
     if (checkSign(cpu, file_asm))    return WRONG_SIGNATURE;
 
-    fscanf(file_asm, "\n");
+    printf("ftell: %d\n", ftell(file_asm));
+
+    //fscanf(file_asm, "\n");
+
+    /*int ch = 0;
+    while( true )
+    {
+        if( ch != '\n' ) break;
+        ch = fgetc( file_asm );
+    }
+    */
+
+    printf("ftell: %d\n", ftell(file_asm));
 
     fread(&cpu->Size, sizeof(int), 1, file_asm);
 

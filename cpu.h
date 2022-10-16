@@ -5,6 +5,8 @@
 #include <sys\stat.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <math.h>
+
 #include "stack.h"
 #include "Cpu_Config.h"
 #include "logging.h"
@@ -14,10 +16,16 @@
     __VA_ARGS__                      \
     break;
 
+#define CPUDump(cpu);                                          \
+            FuckingCPUDump(cpu,                                \
+                        __PRETTY_FUNCTION__,                   \
+                        __FILE__,                              \
+                        __LINE__);
+
 
 const int CMD_MASK = 31; /*11111*/
 
-const size_t MAX_LEN_SIGN = 3;
+const size_t MAX_LEN_SIGN = 20;
 
 enum CPU_ERRORS
 {
@@ -26,6 +34,13 @@ enum CPU_ERRORS
     ZERO_DIVISION     = 3,
     INVALID_REG_INDEX = 4,
     INVALID_MEM_INDEX = 5
+};
+
+enum PrintRAMFromats
+{
+    BIN_FORMAT = 0,
+    SYM_FORMAT = 1,
+    INT_FORMAT = 2
 };
 
 
@@ -37,15 +52,26 @@ typedef struct CPU_struct
     const char* signature;
     size_t      ip;
     size_t      Size;
+    stack_t*    Stk;
+    stack_t*    StkCalls;
 } CPU;
 
-int  Execute(CPU* cpu, stack_t* stk);
+int  Execute(CPU* cpu);
 
 void SkipNewLines();
 
-void PushArg(CPU* cpu, stack_t* stk);
+int FuckingCPUDump(CPU* cpu,
+                   const char* funcname,
+                   const char* filename,
+                   int         line);
 
-int PopArg(CPU* cpu, stack_t* stk);
+void CPUDumpEmExit();
+
+int PrintRAM(size_t format, CPU* cpu, size_t len_line);
+
+void PushArg(CPU* cpu);
+
+int PopArg(CPU* cpu);
 
 void CpuCtor(CPU* cpu);
 

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <ctype.h>
+#include <math.h>
 
 #include "onegin.h"
 #include "stack.h"
@@ -48,20 +49,11 @@ enum CMD_NAMES
     CMD_JE   = 14,
     CMD_JNE  = 15,
     CMD_NAME = 16,
-    CMD_LAB  = 17
+    CMD_LAB  = 17,
+    CMD_DRAW = 18
 };
 
-const int LEN_LIST_CMDS_WO_ARGS = 7;
-
-const char LIST_CMDS_WITHOUT_ARGS[] = {CMD_HLT,
-                                       CMD_ADD,
-                                       CMD_SUB,
-                                       CMD_MUL,
-                                       CMD_DIV,
-                                       CMD_IN,
-                                       CMD_OUT};
-
-int IfArg(int cmd_code);
+int PrintASM(asm_t* asm_code);
 
 
 elem_t PutArg(size_t       cmd_code,

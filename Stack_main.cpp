@@ -335,7 +335,7 @@ UnsignedLL StackVerify(stack_t* stk)
 #if STACK_MODE >= HARDDEBUG_MODE
 void DumpEmExit()
 {
-    log("\n---------- EMERGENCY FINISH DUMP ----------\n\n");
+    log("\n---------- EMERGENCY FINISH STACK DUMP ----------\n\n");
 }
 
 int FuckingDump(stack_t* stk,
@@ -343,7 +343,7 @@ int FuckingDump(stack_t* stk,
                 const char* filename,
                 int         line)
 {
-    log("\n\n++++++++++ Start Dump ++++++++++\n");
+    log("\n\n++++++++++ Start Stack Dump ++++++++++\n");
 
     if (stk == NULL)
     {

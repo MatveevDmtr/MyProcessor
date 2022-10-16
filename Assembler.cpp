@@ -13,7 +13,7 @@ const size_t MAX_LEN_CMD    = 30;
 
 const size_t MAX_NUM_LABELS = 30;
 
-const char* INPUT_FILE_NAME = "user_code.txt";
+const char* INPUT_FILE_NAME = "factorial.txt";
 
 const char* SIGNATURE = "MDA";
 
@@ -55,8 +55,6 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
 
     char*  cursor = NULL;
 
-    int ifdir = 1;
-
     for (size_t i = 0; i < ptr_user_code->Num_lines; i++)
     {
         cursor = (ptr_arr_structs->Ptr)[i].Loc;
@@ -84,31 +82,25 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
         #undef DEF_CMD
     }
 
-    for (size_t i = 0; i < asm_code->Ip; i++)
-    {
-        log("elem of asm: %d\n", (asm_code->Ptr)[i]);
-    }
-
     asm_code->Size = asm_code->Ip;
+
+    PrintASM(asm_code);
 
     return 0;
 }
 
-int IfArg(int cmd_code)
+int PrintASM(asm_t* asm_code)
 {
-    size_t i = 0;
+    log("\n\n^^^^^^^ START ASM CODE ^^^^^^^\n\n");
 
-    while (i < LEN_LIST_CMDS_WO_ARGS)
+    size_t numbers_in_size = (size_t) ceil(log10 ((double) asm_code->Size));
+
+    for (size_t i = 0; i < asm_code->Ip; i++)
     {
-        if (cmd_code == LIST_CMDS_WITHOUT_ARGS[i])
-        {
-            return false;
-        }
-
-        i++;
+        log("ASM[%0*d]: %d\n", numbers_in_size, i, (asm_code->Ptr)[i]);
     }
 
-    return true;
+    log("\n=======  END ASM CODE =======\n\n");
 }
 
 int SkipSpace(char** cursor)
@@ -185,7 +177,7 @@ int FuncJump(char*        ptr_arg,
 
     size_t num_label = IdentifyNumLabel(ptr_arg, asm_code);
 
-    (asm_code->Ptr)[(asm_code->Ip)++] = CMD_JUMP;
+    //(asm_code->Ptr)[(asm_code->Ip)++] = CMD_JUMP;
 
     (asm_code->Ptr)[(asm_code->Ip)++] = asm_code->Labels[num_label].Value;
 
@@ -331,7 +323,7 @@ elem_t PutArg(size_t       cmd_code,
         return arg;
     }
 
-    print_log(FRAMED, "Syntax Error: Invalid Argument");
+    log("No argument found\n");
 
     return -1;
 }
@@ -573,15 +565,17 @@ int WriteASM(int* ptr_asm, char* filename, size_t buf_size)
 
 int WriteHead(FILE* file, size_t buf_size)
 {
+    log("length signature: %d\n", strlen(SIGNATURE));
+
     fwrite(SIGNATURE, sizeof(char), strlen(SIGNATURE), file);
 
-    fputc('\n', file);
+    //fputc('\n', file);
 
     log("written size: %d\n", buf_size);
 
     fwrite(&buf_size, sizeof(int), 1, file);
 
-    fputc('\n', file);
+    //fputc('\n', file);
 
     return 0;
 }
