@@ -14,7 +14,7 @@ const size_t MAX_LEN_CMD    = 30;
 
 const size_t MAX_NUM_LABELS = 30;
 
-const char* INPUT_FILE_NAME = "factorial.txt";
+const char* INPUT_FILE_NAME = "square_equation.txt";
 
 const char* SIGNATURE = "MDA";
 
@@ -128,6 +128,15 @@ int SearchLabelByName(label_field* labels, char* name)
     }
 
     print_log(FRAMED, "LABEL ERROR: No such label found");
+
+    log("Expected to find label: %s\n", name);
+
+    log("List labels:\n");
+
+    for (size_t i = 0; i < MAX_NUM_LABELS; i++)
+    {
+        log("Name: %*s,      value: %d\n", MAX_LEN_LABEL_NAME, labels[i].Name, labels[i].Value);
+    }
 
     return -1;
 }

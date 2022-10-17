@@ -356,7 +356,7 @@ int* GetArg(CPU* cpu)
 
         if (cpu->code[cmd_ip] & ARG_IMMED)
         {
-            arg += cpu->code[cpu->ip++];
+            arg += cpu->code[cpu->ip++] * ACCURACY;
         }
 
         log("arg of GetArg wo RAM: %d\n", arg);

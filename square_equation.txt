@@ -1,20 +1,38 @@
-in
-copy
-push [0]
+name copy_coefs_ram_regs 0
+name discrim 1
+name high_p_parab 2
+
+
 
 in
 copy
-push [1]
+pop [0]
 
 in
 copy
-push [2]
+pop [1]
 
+in
+copy
+pop [2]
 
-pop rcx
-pop rbx
-pop rax
+call high_p_parab
+out
+hlt
 
+lbl high_p_parab
+call copy_coefs_ram_regs
+push rbx
+push -1
+mul
+push 2
+push rax
+mul
+div
+ret
+
+lbl discrim
+call copy_coefs_ram_regs
 push rbx
 copy
 mul
@@ -24,13 +42,27 @@ push rcx
 mul
 mul
 add
+copy
+pop [3]
+ret
 
 
 
 
 
+lbl copy_coefs_ram_regs
+push [0]
+copy
+pop [0]
+pop rax
 
-lbl push_abc
+push [1]
+copy
+pop [1]
+pop rbx
 
-
+push [2]
+copy
+pop [2]
+pop rcx
 ret

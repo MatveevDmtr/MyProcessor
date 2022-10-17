@@ -5,9 +5,9 @@
 
 #define DO_JUMP        {cpu->ip = cpu->code[(cpu->ip)+1] - 2;}
 
-#define DO_POP         ({StackPop(stk);})
+#define DO_POP         ({(double)StackPop(stk) / ACCURACY;})
 
-#define DO_PUSH(arg)   StackPush(stk, arg);
+#define DO_PUSH(arg)   StackPush(stk, (arg) * ACCURACY);
 
 #define REMEMBER_CALL  {StackPush(cpu->StkCalls, cpu->ip);};
 
@@ -24,23 +24,27 @@ DEF_CMD(HLT, 0, 0,
 
 DEF_CMD(PUSH, 1, 1,
 {
-    DO_PUSH(*GetArg(cpu));
+    DO_PUSH(*GetArg(cpu) / ACCURACY);
 })
 
 DEF_CMD(POP, 2, 1,
 {
     int* ptr = GetArg(cpu);
 
-    log("get_arg in POP: %d\n", ptr);
-
-    *ptr = DO_POP;
+    *ptr = DO_POP * ACCURACY;
 })
 
 DEF_CMD(ADD, 3, 0,
 {
     log("in add\n");
+    int a = DO_POP;
+    int b = DO_POP;
 
-    DO_PUSH(DO_POP + DO_POP);
+    log("a: %d, b: %d\n", a, b);
+
+    log("a+b: %d", a+b);
+
+    DO_PUSH(a + b);
 })
 
 DEF_CMD(SUB, 4, 0,
@@ -61,17 +65,18 @@ DEF_CMD(DIV, 6, 0,
 {
     log("in div\n");
 
-    int a = DO_POP;
-    int b = DO_POP;
+    double a = DO_POP;
+    double b = DO_POP;
 
     if (b == 0)
     {
         printf("ZERO DIVISION ERROR: can't divide by zero\n");
+
         return ZERO_DIVISION;
     }
     else
     {
-        DO_PUSH(a * b);
+        DO_PUSH(b / a);
     }
 
 })
@@ -85,6 +90,7 @@ DEF_CMD(IN, 7, 0,
     while (!scanf("%d", &value))
     {
         printf("please, enter a fucking number:\n");
+
         SkipNewLines();
     }
 
@@ -97,7 +103,12 @@ DEF_CMD(OUT, 8, 0,
 {
     log("cuming out\n");
 
-    printf("Out print is %d\n", DO_POP);
+    double val = DO_POP;
+
+    log("val to out: %lg\n", val);
+
+    if (floor(val) == val)          printf("Out print is %d \n", (int)val);
+    else                            printf("Out print is %lg\n",      val);
 })
 
 DEF_CMD(JUMP, 9, 1,
@@ -196,7 +207,9 @@ DEF_CMD(RET, 20, 0,
 
 DEF_CMD(COPY, 21, 0,
 {
-    int val = DO_POP;
+    double val = DO_POP;
+
+    log("value in copy: %lg\n", val);
 
     DO_PUSH(val);
     DO_PUSH(val);
@@ -204,11 +217,13 @@ DEF_CMD(COPY, 21, 0,
 
 DEF_CMD(SQRT, 22, 0,
 {
-    int val = DO_POP;
+    double val = DO_POP;
 
-    val = floor(sqrt(val));
+    double sqrt_val = sqrt(val);
 
-    DO_PUSH(val);
+    log("sqrt from val: %lg\n", sqrt_val);
+
+    DO_PUSH(sqrt_val);
 })
 
 

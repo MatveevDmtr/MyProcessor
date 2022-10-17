@@ -30,9 +30,13 @@
 }
 
 
+
+
 const int CMD_MASK = 31; /*11111*/
 
 const size_t MAX_LEN_SIGN = 20;
+
+const int ACCURACY = 1000;
 
 enum CPU_ERRORS
 {

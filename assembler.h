@@ -13,7 +13,7 @@
 #include "StackConfig.h"
 #include "Cpu_Config.h"
 
-const size_t MAX_LEN_LABEL_NAME = 10;
+const size_t MAX_LEN_LABEL_NAME = 30;
 
 typedef struct LABEL
 {

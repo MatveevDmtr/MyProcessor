@@ -1,11 +1,5 @@
-push 10
-name func 0
-call func
+push 1
+push 2
+mul
 out
 hlt
-
-
-lbl func
-pop rcx
-push rcx+10
-ret
