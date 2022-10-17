@@ -22,6 +22,13 @@
                         __FILE__,                              \
                         __LINE__);
 
+#define RETURN_PTR_ARG(arg)          \
+{                                    \
+    cpu->ip--;                       \
+                                     \
+    return arg;                      \
+}
+
 
 const int CMD_MASK = 31; /*11111*/
 
@@ -68,6 +75,8 @@ int FuckingCPUDump(CPU* cpu,
 void CPUDumpEmExit();
 
 int PrintRAM(size_t format, CPU* cpu, size_t len_line);
+
+int* GetArg(CPU* cpu);
 
 void PushArg(CPU* cpu);
 

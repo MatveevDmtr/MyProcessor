@@ -24,12 +24,16 @@ DEF_CMD(HLT, 0, 0,
 
 DEF_CMD(PUSH, 1, 1,
 {
-   PushArg(cpu);
+    DO_PUSH(*GetArg(cpu));
 })
 
 DEF_CMD(POP, 2, 1,
 {
-    PopArg(cpu);
+    int* ptr = GetArg(cpu);
+
+    log("get_arg in POP: %d\n", ptr);
+
+    *ptr = DO_POP;
 })
 
 DEF_CMD(ADD, 3, 0,
@@ -195,6 +199,15 @@ DEF_CMD(COPY, 21, 0,
     int val = DO_POP;
 
     DO_PUSH(val);
+    DO_PUSH(val);
+})
+
+DEF_CMD(SQRT, 22, 0,
+{
+    int val = DO_POP;
+
+    val = floor(sqrt(val));
+
     DO_PUSH(val);
 })
 

@@ -203,6 +203,7 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
     printf("\n");
 }
 
+/*
 void PushArg(CPU* cpu)
 {
     log("start push\n");
@@ -253,6 +254,7 @@ void PushArg(CPU* cpu)
     log("finish push\n");
 }
 
+//1 func for push and pop with ptr to location to ...
 int PopArg(CPU* cpu)
 {
     log("start pop\n");
@@ -302,6 +304,68 @@ int PopArg(CPU* cpu)
 
     log("pop done\n");
 }
+*/
+
+int* GetArg(CPU* cpu)
+{
+    log("start GetArg\n");
+
+    size_t cmd_ip = cpu->ip++;
+
+    log("code of push: %d\n", cpu->code[cmd_ip]);
+
+    if (cpu->code[cmd_ip] & ARG_RAM)
+    {
+        static int index;
+
+        index = 0;
+
+        if (cpu->code[cmd_ip] & ARG_REG)
+        {
+            index += cpu->regs[cpu->code[(cpu->ip)++]];
+        }
+
+        if (cpu->code[cmd_ip] & ARG_IMMED)
+        {
+            index += cpu->code[cpu->ip++];
+        }
+
+        RETURN_PTR_ARG(cpu->RAM + index);
+    }
+    else
+    {
+        static int arg;
+
+        arg = 0;
+
+        log("GetArg wo RAM\n");
+
+        log("Arg at start: %d\n", arg);
+
+        if (cpu->code[cmd_ip] & ARG_REG)
+        {
+            if (!(cpu->code[cmd_ip] & ARG_IMMED))
+            {
+                int* ptr_to_reg = cpu->regs + cpu->code[(cpu->ip++)];
+
+                RETURN_PTR_ARG(ptr_to_reg);
+            }
+
+            arg += cpu->regs[cpu->code[(cpu->ip)++]];
+        }
+
+        if (cpu->code[cmd_ip] & ARG_IMMED)
+        {
+            arg += cpu->code[cpu->ip++];
+        }
+
+        log("arg of GetArg wo RAM: %d\n", arg);
+
+        RETURN_PTR_ARG(&arg);
+    }
+
+    log("finish GetArg\n");
+}
 
 void CpuCtor(CPU* cpu)
 {
@@ -334,6 +398,7 @@ int checkSign(CPU* cpu, FILE* file_asm)
 
     return 0;
 }
+//in
 
 int getCode(CPU* cpu)
 {
@@ -341,23 +406,13 @@ int getCode(CPU* cpu)
 
     Assert(file_asm == NULL);
 
-    printf("ftell: %d\n", ftell(file_asm));
+    log("ftell: %d\n", ftell(file_asm));
 
     if (checkSign(cpu, file_asm))    return WRONG_SIGNATURE;
 
-    printf("ftell: %d\n", ftell(file_asm));
+    log("ftell: %d\n", ftell(file_asm));
 
-    //fscanf(file_asm, "\n");
-
-    /*int ch = 0;
-    while( true )
-    {
-        if( ch != '\n' ) break;
-        ch = fgetc( file_asm );
-    }
-    */
-
-    printf("ftell: %d\n", ftell(file_asm));
+    log("ftell: %d\n", ftell(file_asm));
 
     fread(&cpu->Size, sizeof(int), 1, file_asm);
 

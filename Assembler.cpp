@@ -9,6 +9,7 @@
 
 //#include <TXLib.h>
 
+//warnings
 const size_t MAX_LEN_CMD    = 30;
 
 const size_t MAX_NUM_LABELS = 30;
@@ -37,8 +38,13 @@ int Assemble()
     UserCodeToASM(&user_code, &arr_structs, &asm_code);
 
     WriteASM(asm_code.Ptr, "ASM.txt", asm_code.Size);
-
+          //free
     return 0;
+}
+
+int Free(void* ptr, size_t num_bytes)
+{
+    ;
 }
 
 int UserCodeToASM(type_buf_char*    ptr_user_code,
@@ -47,7 +53,7 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
 {
     asm_code->Ip = 0;
 
-    char   cmd[MAX_LEN_CMD] = {};
+    char   cmd[MAX_LEN_CMD] = "";
 
     size_t read_res     = 0;
 
@@ -177,8 +183,6 @@ int FuncJump(char*        ptr_arg,
 
     size_t num_label = IdentifyNumLabel(ptr_arg, asm_code);
 
-    //(asm_code->Ptr)[(asm_code->Ip)++] = CMD_JUMP;
-
     (asm_code->Ptr)[(asm_code->Ip)++] = asm_code->Labels[num_label].Value;
 
     return 0;
@@ -244,8 +248,6 @@ elem_t PutArg(size_t       cmd_code,
 
     log("ptr_arg: %p, first sym to scan: %c\n", ptr_arg, *ptr_arg);
 
-    //txDump(ptr_arg);
-
     read_res = sscanf(ptr_arg, "[%d+%[a-z]]", &arg, reg_name);
 
     if (!read_res)
@@ -255,7 +257,7 @@ elem_t PutArg(size_t       cmd_code,
     {
         log("case [d+rcx]\n");
 
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_REG + ARG_RAM;
+        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_REG + ARG_RAM; //|
 
         HandleRegs(asm_code, reg_name);
 
@@ -263,6 +265,7 @@ elem_t PutArg(size_t       cmd_code,
 
         return arg;
     }
+    //DSL
 
     read_res = sscanf(ptr_arg, "%d+%[a-z]", &arg, reg_name);
 
@@ -291,7 +294,6 @@ elem_t PutArg(size_t       cmd_code,
         log("case [d]\n");
 
         (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_RAM;
-
         (asm_code->Ptr)[(asm_code->Ip)++] = arg;
 
         return NULL;
@@ -327,28 +329,6 @@ elem_t PutArg(size_t       cmd_code,
 
     return -1;
 }
-
-/*int ReadByFormat(char* mask1, char* mask2, ...)
-{
-    va_list args;
-
-    va_start (args, format);
-
-    va_arg(args, int);
-
-    va_arg(args, char*);
-
-    read_res = sscanf(ptr_arg, mask1, &arg, reg_name);
-
-    if (!read_res)
-    {
-        read_res = sscanf(ptr_arg, mask2, &reg_name, &arg);
-    }
-
-    fflush(LOG_FILE);
-
-    va_end(args);
-}*/
 
 int HandleRegs(asm_t* asm_code, char* reg_name)
 {
@@ -386,8 +366,6 @@ int read_file(const char* filename,
 
     make_pointers_to_lines(ptr_text_buf,
                            ptr_arr_structs);
-
-    //txDump(ptr_text_buf->Ptr);
 
     return 0;
 }

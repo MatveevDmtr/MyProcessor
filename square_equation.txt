@@ -1,0 +1,36 @@
+in
+copy
+push [0]
+
+in
+copy
+push [1]
+
+in
+copy
+push [2]
+
+
+pop rcx
+pop rbx
+pop rax
+
+push rbx
+copy
+mul
+push -4
+push rax
+push rcx
+mul
+mul
+add
+
+
+
+
+
+
+lbl push_abc
+
+
+ret
