@@ -14,7 +14,7 @@ const size_t MAX_LEN_CMD    = 30;
 
 const size_t MAX_NUM_LABELS = 30;
 
-const char* INPUT_FILE_NAME = "square_equation.txt";
+const char* INPUT_FILE_NAME = "factorial.txt";
 
 const char* SIGNATURE = "MDA";
 

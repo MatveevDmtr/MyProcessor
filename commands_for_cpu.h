@@ -24,7 +24,7 @@ DEF_CMD(HLT, 0, 0,
 
 DEF_CMD(PUSH, 1, 1,
 {
-    DO_PUSH(*GetArg(cpu) / ACCURACY);
+    DO_PUSH(((double)*GetArg(cpu)) / ACCURACY);
 })
 
 DEF_CMD(POP, 2, 1,
@@ -37,12 +37,12 @@ DEF_CMD(POP, 2, 1,
 DEF_CMD(ADD, 3, 0,
 {
     log("in add\n");
-    int a = DO_POP;
-    int b = DO_POP;
+    double a = DO_POP;
+    double b = DO_POP;
 
-    log("a: %d, b: %d\n", a, b);
+    log("a: %lg, b: %lg\n", a, b);
 
-    log("a+b: %d", a+b);
+    log("a+b: %lg", a+b);
 
     DO_PUSH(a + b);
 })
@@ -51,7 +51,10 @@ DEF_CMD(SUB, 4, 0,
 {
     log("in sub\n");
 
-    DO_PUSH(DO_POP - DO_POP);
+    double a = DO_POP;
+    double b = DO_POP;
+
+    DO_PUSH(b - a);
 })
 
 DEF_CMD(MUL, 5, 0,
@@ -68,7 +71,9 @@ DEF_CMD(DIV, 6, 0,
     double a = DO_POP;
     double b = DO_POP;
 
-    if (b == 0)
+    log("a: %lg, b: %lg\n", a, b);
+
+    if (a == 0)
     {
         printf("ZERO DIVISION ERROR: can't divide by zero\n");
 

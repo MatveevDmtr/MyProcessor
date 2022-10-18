@@ -1,6 +1,7 @@
 name copy_coefs_ram_regs 0
 name discrim 1
 name high_p_parab 2
+name count_various_part 3
 
 
 
@@ -17,8 +18,32 @@ copy
 pop [2]
 
 call high_p_parab
+call discrim
+call count_various_part
+push [4]
+copy
+pop [4]
+push [5]
+copy
+pop [5]
+add
+out
+push [4]
+push [5]
+sub
 out
 hlt
+
+lbl count_various_part
+call copy_coefs_ram_regs
+push [3]
+sqrt
+push 2
+push rax
+mul
+div
+pop [5]
+ret
 
 lbl high_p_parab
 call copy_coefs_ram_regs
@@ -29,6 +54,7 @@ push 2
 push rax
 mul
 div
+pop [4]
 ret
 
 lbl discrim
