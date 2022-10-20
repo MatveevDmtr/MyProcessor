@@ -1,6 +1,7 @@
 #ifndef COMMANDS_FOR_CPU_H_INCLUDED
 #define COMMANDS_FOR_CPU_H_INCLUDED
 
+//#include <TXLib.h>
 //#define DO_JUMP        {cpu->ip = cpu->code[cpu->ip+1] - 1;}
 
 #define DO_JUMP        {cpu->ip = cpu->code[(cpu->ip)+1] - 2;}
@@ -88,7 +89,7 @@ DEF_CMD(DIV, 6, 0,
 
 DEF_CMD(IN, 7, 0,
 {
-    printf("enter a number");
+    printf("enter a number: ");
 
     int value = 0;
 
@@ -195,7 +196,7 @@ DEF_CMD(JNE, 15, 1,
 
 DEF_CMD(DRAW, 18, 0,
 {
-    PrintRAM(BIN_FORMAT, cpu, 10);
+    PrintRAM(BIN_FORMAT, cpu, 100); //const, static screen
 })
 
 DEF_CMD(CALL, 19, 1,
@@ -229,6 +230,12 @@ DEF_CMD(SQRT, 22, 0,
     log("sqrt from val: %lg\n", sqrt_val);
 
     DO_PUSH(sqrt_val);
+})
+
+DEF_CMD(CLEAR, 23, 0,
+{
+    ;
+    txClearConsole();
 })
 
 

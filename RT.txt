@@ -1,0 +1,218 @@
+name draw_vline 0
+name draw_hline 1
+name c1 2
+name c2 3
+name VCenter 4
+name HCenter 5
+name DrawRT 6
+name GIF 7
+name Picture 8
+name ClearMem 9
+name MemCount 10
+push 4
+pop rlx
+
+
+
+push 100
+pop rmx
+push 50
+pop rnx
+push 4
+pop rox
+push 40
+pop rgx
+
+
+lbl GIF
+push 4
+pop rlx
+
+lbl Picture
+call DrawRT
+call ClearMem
+clear
+
+push rlx
+push 2
+add
+pop rlx
+
+push rlx
+push rgx
+jae Picture
+
+jump GIF
+
+hlt
+
+
+lbl ClearMem
+push rmx
+push rnx
+mul
+pop rix
+
+push 0
+pop rhx
+
+lbl MemCount
+push 0
+pop [rhx]
+
+push rhx
+push 1
+add
+pop rhx
+
+push rhx
+push rix
+ja MemCount
+ret
+
+
+
+lbl DrawRT
+push rlx
+call VCenter
+copy
+pop rpx
+
+push rlx
+push 2
+mul
+push rox
+add
+call HCenter
+copy
+pop rrx
+push rlx
+call draw_vline
+
+push rpx
+push rrx
+push rlx
+call draw_hline
+
+push rpx
+push rrx
+push rlx
+add
+push rlx
+push 2
+div
+push 1
+add
+call draw_vline
+
+push rlx
+push 2
+div
+push rpx
+add
+push rrx
+push rlx
+call draw_hline
+
+push rpx
+push rrx
+push rlx
+push rox
+push rlx
+push 2
+div
+add
+add
+add
+push rlx
+call draw_vline
+
+push rpx
+push rrx
+push rlx
+push rox
+add
+add
+push rlx
+push 1
+add
+call draw_hline
+
+draw
+ret
+
+
+
+
+lbl draw_vline
+pop rcx
+pop rbx
+pop rax
+
+push 0
+pop rdx
+
+lbl c1
+push rax
+push rdx
+add
+push rmx
+mul
+push rbx
+add
+pop rex
+push 1
+pop [rex]
+
+push rdx+1
+copy
+pop rdx
+push rcx
+ja c1
+ret
+
+lbl draw_hline
+pop rcx
+pop rbx
+pop rax
+
+push 0
+pop rdx
+
+lbl c2
+push rax
+push rmx
+mul
+push rbx
+add
+push rdx
+add
+
+pop rex
+push 1
+pop [rex]
+
+push rdx+1
+copy
+pop rdx
+push rcx
+ja c2
+ret
+
+lbl VCenter
+pop rfx
+push rnx
+push rfx
+sub
+push 2
+div
+ret
+
+lbl HCenter
+pop rfx
+push rmx
+push rfx
+sub
+push 2
+div
+ret

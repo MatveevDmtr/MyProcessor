@@ -103,6 +103,8 @@ DEF_CMD(COPY, 21, WRITE_CMD_NUM)
 
 DEF_CMD(SQRT, 22, WRITE_CMD_NUM)
 
+DEF_CMD(CLEAR, 23, WRITE_CMD_NUM)
+
 //1 file for asm and proc
 
 

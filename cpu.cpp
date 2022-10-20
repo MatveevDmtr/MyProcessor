@@ -12,9 +12,9 @@
 const char* CPU_SIGNATURE  = "MDA";
 const char* NAME_FILE_CODE = "ASM.txt";
 
-const size_t RAM_SIZE = 100;
+const size_t RAM_SIZE = 5000;
 
-const size_t REG_SIZE = 10;
+const size_t REG_SIZE = 30;
 
 int Run()
 {
@@ -40,6 +40,8 @@ int Run()
     {
         print_log(FRAMED, "EXECUTION ERROR");
     }
+
+    CPUDtor(&cpu);
 
     log("Finish running\n");
 
@@ -75,7 +77,7 @@ int Execute(CPU* cpu)
 
         cpu->ip++;
 
-        CPUDump(cpu);
+        //CPUDump(cpu);
     }
 
     log("end of cycle\n");
@@ -172,6 +174,12 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
 {
     int* ptr_RAM = cpu->RAM;
 
+    size_t screen_size = RAM_SIZE + RAM_SIZE / len_line + 1;
+
+    char* screen = allocate_array(char, screen_size);//put {} and move to case
+
+    size_t j = 0; //rename
+
     switch (format)
     {
         case BIN_FORMAT:
@@ -179,12 +187,22 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
 
             for (size_t i = 0; i < RAM_SIZE; i++)
             {
-                if (i % len_line == 0)     printf("\n");
+                if (i % len_line == 0)
+                {
+                    screen[j] = '\n';
+                    j++;
+                }
 
-                if (ptr_RAM[i])            printf("%c", '#');
+                if (ptr_RAM[i])            screen[j] = '#';
 
-                else                       printf("%c", ' ');
+                else                       screen[j] = '.';
+
+                j++;
             }
+            screen[j] = '\0';
+
+            fwrite(screen, sizeof(char), screen_size, stdout);
+            //printf("%s", screen);
             break;
 
         case SYM_FORMAT:
@@ -375,8 +393,20 @@ void CpuCtor(CPU* cpu)
     cpu->RAM = (int*)(calloc(RAM_SIZE, sizeof(int)));
     Assert(cpu->RAM == nullptr);
 
+    //static int registers[REG_SIZE] = {};
+
+    //cpu->regs = registers;
+
     cpu->regs = (int*)(calloc(REG_SIZE, sizeof(int)));
-    Assert(cpu->regs == nullptr);
+    Assert(cpu->regs == nullptr);//make static?
+}
+
+int CPUDtor(CPU* cpu)
+{
+    FREE     (cpu->RAM);
+    FREE     (cpu->regs);
+    StackDtor(cpu->Stk);
+    StackDtor(cpu->StkCalls);
 }
 
 int checkSign(CPU* cpu, FILE* file_asm)
@@ -398,6 +428,9 @@ int checkSign(CPU* cpu, FILE* file_asm)
 
     return 0;
 }
+
+// version control through other file
+
 //in
 
 int getCode(CPU* cpu)
@@ -406,13 +439,13 @@ int getCode(CPU* cpu)
 
     Assert(file_asm == NULL);
 
-    log("ftell: %d\n", ftell(file_asm));
+    //log("ftell: %d\n", ftell(file_asm));
 
     if (checkSign(cpu, file_asm))    return WRONG_SIGNATURE;
 
-    log("ftell: %d\n", ftell(file_asm));
+    //log("ftell: %d\n", ftell(file_asm));
 
-    log("ftell: %d\n", ftell(file_asm));
+    //log("ftell: %d\n", ftell(file_asm));
 
     fread(&cpu->Size, sizeof(int), 1, file_asm);
 

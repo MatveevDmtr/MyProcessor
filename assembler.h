@@ -13,6 +13,13 @@
 #include "StackConfig.h"
 #include "Cpu_Config.h"
 
+#define FREE(ptr)                                                   \
+{                                                                   \
+    Assert(ptr == NULL);                                            \
+                                                                    \
+    free(ptr);                                                      \
+}
+
 const size_t MAX_LEN_LABEL_NAME = 30;
 
 typedef struct LABEL

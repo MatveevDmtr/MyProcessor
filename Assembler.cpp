@@ -12,18 +12,18 @@
 //warnings
 const size_t MAX_LEN_CMD    = 30;
 
-const size_t MAX_NUM_LABELS = 30;
+const size_t MAX_NUM_LABELS = 30; // many files
 
-const char* INPUT_FILE_NAME = "factorial.txt";
+const char* INPUT_FILE_NAME = "square_equation.txt"; //args cmd
 
-const char* SIGNATURE = "MDA";
+const char* SIGNATURE = "MDA"; //+version
 
 int Assemble()
 {
     type_buf_char      user_code         = {NULL, 0, 0};
     type_buf_structs   arr_structs       = {NULL, 0   };
 
-    label_field labels[MAX_NUM_LABELS] = {{87, ""}};
+    label_field labels[MAX_NUM_LABELS] = {};
 
     asm_t asm_code = {NULL, NULL, 0, labels};
 
@@ -40,11 +40,6 @@ int Assemble()
     WriteASM(asm_code.Ptr, "ASM.txt", asm_code.Size);
           //free
     return 0;
-}
-
-int Free(void* ptr, size_t num_bytes)
-{
-    ;
 }
 
 int UserCodeToASM(type_buf_char*    ptr_user_code,
@@ -294,7 +289,7 @@ elem_t PutArg(size_t       cmd_code,
         (asm_code->Ptr)[(asm_code->Ip)++] = arg;
 
         return arg;
-    }
+    } //union of 2 cases
 
     read_res = sscanf(ptr_arg, "[%d]", &arg);
 
@@ -304,6 +299,19 @@ elem_t PutArg(size_t       cmd_code,
 
         (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_RAM;
         (asm_code->Ptr)[(asm_code->Ip)++] = arg;
+
+        return NULL;
+    }
+
+    read_res = sscanf(ptr_arg, "[%[a-z]]", reg_name);
+
+    if (read_res == 1)
+    {
+        log("case [rcx]\n");
+
+        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_REG + ARG_RAM;
+
+        HandleRegs(asm_code, reg_name);
 
         return NULL;
     }
@@ -334,7 +342,7 @@ elem_t PutArg(size_t       cmd_code,
         return arg;
     }
 
-    log("No argument found\n");
+    log("No argument found\n"); //union of ram and noRAM analogs
 
     return -1;
 }
@@ -346,7 +354,7 @@ int HandleRegs(asm_t* asm_code, char* reg_name)
         print_log(FRAMED, "Syntax Error: name of register is invalid");
     }
 
-    int reg_num = *(reg_name + 1) - 'a';
+    int reg_num = reg_name[1] - 'a';
 
     log("reg_num: %d\n\n", reg_num);
 

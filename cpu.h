@@ -29,8 +29,25 @@
     return arg;                      \
 }
 
+#define allocate_array(type, num_elems)                             \
+({                                                                  \
+    type* location__ = (type*) calloc (num_elems, sizeof (type));   \
+    log ("Type_calloc: %s\n", #type);                               \
+    log ("Sizeof type: %d\n", sizeof (type*));                      \
+    Assert(location__ == NULL);                                     \
+    log ("Calloc returned: %p\n\n", location__);                    \
+    location__;                                                     \
+})
+
+#define FREE(ptr)                                                   \
+{                                                                   \
+    Assert(ptr == NULL);                                            \
+                                                                    \
+    free(ptr);                                                      \
+}
 
 
+#include <TXLib.h>
 
 const int CMD_MASK = 31; /*11111*/
 
@@ -87,6 +104,8 @@ void PushArg(CPU* cpu);
 int PopArg(CPU* cpu);
 
 void CpuCtor(CPU* cpu);
+
+int CPUDtor(CPU* cpu);
 
 int  checkSign(CPU* cpu, FILE* a_code);
 

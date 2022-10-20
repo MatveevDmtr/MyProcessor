@@ -1,5 +1,18 @@
-push 1
-push 2
-mul
-out
-hlt
+push 5
+push 3
+push 20
+call draw_hline
+draw
+
+push 5
+push 23
+push 20
+call draw_vline
+draw
+
+push 25
+push 3
+push 20
+call draw_hline
+
+draw
