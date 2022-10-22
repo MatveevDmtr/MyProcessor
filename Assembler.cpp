@@ -1,31 +1,43 @@
 #include "assembler.h"
+#include "ProcessorConfig.h"
 
-#define DEF_CMD(name, num, ...)        \
-    else if (!stricmp(cmd, #name))    \
+#define DEF_CMD(name, num, arg, ...) \
+    else if (!stricmp(cmd, #name))   \
         {                            \
             cmd_code = num;          \
             __VA_ARGS__              \
         }                            \
 
-//#include <TXLib.h>
+//start constants
+const char*  VERSION_FILE     = "version.txt";
 
-//warnings
-const size_t MAX_LEN_CMD    = 30;
+size_t       VERSION_REPEAT   = 1024;
 
-const size_t MAX_NUM_LABELS = 30; // many files
+const size_t MAX_LEN_CMD      = 30;
 
-const char* INPUT_FILE_NAME = "square_equation.txt"; //args cmd
+const size_t MAX_NUM_LABELS   = 30;
 
-const char* SIGNATURE = "MDA"; //+version
+const size_t MAX_LEN_REG_NAME = 5;
 
-int Assemble()
+const char*  ASM_FILE_NAME    = "ASM.txt";
+
+const char*  SIGNATURE        = "MDA";
+
+char*        INPUT_FILE_NAME  = "square_equation.txt";
+//end constants
+
+
+
+int Assemble(int argc, char** argv)
 {
+    handle_cmd_args(argc, argv);
+
     type_buf_char      user_code         = {NULL, 0, 0};
     type_buf_structs   arr_structs       = {NULL, 0   };
 
     label_field labels[MAX_NUM_LABELS] = {};
 
-    asm_t asm_code = {NULL, NULL, 0, labels};
+    asm_t asm_code = {NULL, 0, 0, labels};
 
     read_file(INPUT_FILE_NAME, &user_code, &arr_structs);
 
@@ -34,12 +46,31 @@ int Assemble()
     Assert(asm_code.Ptr == NULL);
 
     UserCodeToASM(&user_code, &arr_structs, &asm_code);
-
     UserCodeToASM(&user_code, &arr_structs, &asm_code);
 
-    WriteASM(asm_code.Ptr, "ASM.txt", asm_code.Size);
-          //free
+    WriteASM(asm_code.Ptr, ASM_FILE_NAME, asm_code.Size);
+
+    FREE(asm_code.Ptr);
+
     return 0;
+}
+
+int handle_cmd_args(int argc, char** argv)
+{
+    for(int args_count = 1; args_count < argc; args_count++)
+    {
+        INPUT_FILE_NAME = argv[args_count];
+    }
+
+    if(argc == 1)
+    {
+        printf("Name of code file has not been chosen.\n"
+                "The program is going to try to open default file.\n");
+
+        log("START IN DEFAULT MODE\n");
+    }
+
+    return 1;
 }
 
 int UserCodeToASM(type_buf_char*    ptr_user_code,
@@ -50,15 +81,15 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
 
     char   cmd[MAX_LEN_CMD] = "";
 
-    size_t read_res     = 0;
+    size_t cmd_code         = 0;
 
-    size_t cmd_code     = 0;
-
-    char*  cursor = NULL;
+    char*  cursor           = NULL;
 
     for (size_t i = 0; i < ptr_user_code->Num_lines; i++)
     {
         cursor = (ptr_arr_structs->Ptr)[i].Loc;
+
+        SkipSpace(&cursor);
 
         sscanf(cursor, "%s", cmd);
 
@@ -102,6 +133,8 @@ int PrintASM(asm_t* asm_code)
     }
 
     log("\n=======  END ASM CODE =======\n\n");
+
+    return 0;
 }
 
 int SkipSpace(char** cursor)
@@ -128,7 +161,7 @@ int SearchLabelByName(label_field* labels, char* name)
 
     log("List labels:\n");
 
-    for (size_t i = 0; i < MAX_NUM_LABELS; i++)
+    for (i = 0; i < MAX_NUM_LABELS; i++)
     {
         log("Name: %*s,      value: %d\n", MAX_LEN_LABEL_NAME, labels[i].Name, labels[i].Value);
     }
@@ -197,7 +230,7 @@ size_t IdentifyNumLabel(char*        ptr_arg,
 {
     SkipSpace(&ptr_arg);
 
-    size_t num_label = -1;
+    int num_label = -1;
 
     if (!isdigit(*ptr_arg))
     {
@@ -232,6 +265,102 @@ size_t IdentifyNumLabel(char*        ptr_arg,
     return num_label;
 }
 
+int HandleRegAndNum(asm_t* asm_code, size_t      cmd_code,
+                                     char*       ptr_arg,
+                                     const char* mask1,
+                                     const char* mask2,
+                                     const char* ram_mask1,
+                                     const char* ram_mask2)
+{
+    int  arg         = 0;
+
+    int  read_res    = 0;
+
+    char reg_name[MAX_LEN_REG_NAME] = {};
+
+    if (read_res = sscanf(ptr_arg, ram_mask1, &arg, reg_name))         cmd_code |= ARG_RAM;
+
+    if (read_res < 2)
+        if (read_res = sscanf(ptr_arg, ram_mask2, reg_name, &arg))    cmd_code |= ARG_RAM;
+
+    if (read_res < 2)
+        read_res = sscanf(ptr_arg, mask1, &arg, reg_name);
+
+    if (!read_res < 2)
+        read_res = sscanf(ptr_arg, mask2, reg_name, &arg);
+
+    if (read_res == 2)
+    {
+        log("case [d+rcx]\n");
+
+        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code | ARG_IMMED | ARG_REG;
+
+        HandleRegname(asm_code, reg_name);
+
+        asm_code->Ptr[(asm_code->Ip)++] = arg;
+
+        return 0;
+    }
+
+    return 1;
+}
+
+int HandleNum(asm_t* asm_code, size_t      cmd_code,
+                               char*       ptr_arg,
+                               const char* mask1,
+                               const char* ram_mask1)
+{
+    int  arg         = 0;
+
+    int  read_res    = 0;
+
+    if (read_res = sscanf(ptr_arg, ram_mask1, &arg))        cmd_code |= ARG_RAM;
+
+    if (read_res < 1)
+        read_res = sscanf(ptr_arg, mask1, &arg);
+
+    if (read_res == 1)
+    {
+        log("case d\n");
+
+        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code | ARG_IMMED;
+
+        (asm_code->Ptr)[(asm_code->Ip)++] = arg;
+
+        return 0;
+    }
+
+    return 1;
+}
+
+int HandleReg(asm_t* asm_code, size_t      cmd_code,
+                               char*       ptr_arg,
+                               const char* mask1,
+                               const char* ram_mask1)
+{
+    int  read_res    = 0;
+
+    char reg_name[MAX_LEN_REG_NAME] = {};
+
+    if (read_res = sscanf(ptr_arg, ram_mask1, reg_name))        cmd_code |= ARG_RAM;
+
+    if (read_res < 1)
+        read_res = sscanf(ptr_arg, mask1, reg_name);
+
+    if (read_res == 1)
+    {
+        log("case rcx\n");
+
+        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code | ARG_REG;
+
+        HandleRegname(asm_code, reg_name);
+
+        return 0;
+    }
+
+    return 1;
+}
+
 elem_t PutArg(size_t       cmd_code,
               char*        ptr_arg,
               asm_t*       asm_code)
@@ -240,114 +369,32 @@ elem_t PutArg(size_t       cmd_code,
 
     log("cmd_code: %d\n", cmd_code);
 
-    int  arg         = 0;
-
     int  read_res    = 0;
-
-    int  reg_num     = 0;
-
-    char reg_name[5] = {};
 
     SkipSpace(&ptr_arg);
 
     log("ptr_arg: %p, first sym to scan: %c\n", ptr_arg, *ptr_arg);
 
-    read_res = sscanf(ptr_arg, "[%d+%[a-z]]", &arg, reg_name);
+    read_res = HandleRegAndNum(asm_code, cmd_code, ptr_arg, "%d+%[a-z]",
+                                                            "%[a-z]+%d",
+                                                            "[%d+%[a-z]]",
+                                                            "[%[a-z]+%d]");
+    if (!read_res)       return 0;
 
-    if (!read_res)
-        read_res = sscanf(ptr_arg, "[%[a-z]+%d]", &reg_name, &arg);
+    read_res = HandleNum (asm_code, cmd_code, ptr_arg, "%d",
+                                                       "[%d]");
+    if (!read_res)       return 0;
 
-    if (read_res == 2)
-    {
-        log("case [d+rcx]\n");
+    read_res = HandleReg (asm_code, cmd_code, ptr_arg, "%[a-z]",
+                                                       "[%[a-z]]");
+    if (!read_res)       return 0;
 
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_REG + ARG_RAM; //|
-
-        HandleRegs(asm_code, reg_name);
-
-        asm_code->Ptr[(asm_code->Ip)++] = arg;
-
-        return arg;
-    }
-    //DSL
-
-    read_res = sscanf(ptr_arg, "%d+%[a-z]", &arg, reg_name);
-
-    if (!read_res)
-    {
-        read_res = sscanf(ptr_arg, "%[a-z]+%d", reg_name, &arg);
-    }
-
-    if (read_res == 2)
-    {
-        log("case d+rcx\n");
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_REG;
-
-        HandleRegs(asm_code, reg_name);
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = arg;
-
-        return arg;
-    } //union of 2 cases
-
-    read_res = sscanf(ptr_arg, "[%d]", &arg);
-
-    if (read_res == 1)
-    {
-        log("case [d]\n");
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED + ARG_RAM;
-        (asm_code->Ptr)[(asm_code->Ip)++] = arg;
-
-        return NULL;
-    }
-
-    read_res = sscanf(ptr_arg, "[%[a-z]]", reg_name);
-
-    if (read_res == 1)
-    {
-        log("case [rcx]\n");
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_REG + ARG_RAM;
-
-        HandleRegs(asm_code, reg_name);
-
-        return NULL;
-    }
-
-    read_res = sscanf(ptr_arg, "%[a-z]", reg_name);
-
-    if (read_res == 1)
-    {
-        log("case rcx\n");
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_REG;
-
-        HandleRegs(asm_code, reg_name);
-
-        return NULL;
-    }
-
-    read_res = sscanf(ptr_arg, "%d", &arg);
-
-    if (read_res == 1)
-    {
-        log("simple-dimple\n");
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = cmd_code + ARG_IMMED;
-
-        (asm_code->Ptr)[(asm_code->Ip)++] = arg;
-
-        return arg;
-    }
-
-    log("No argument found\n"); //union of ram and noRAM analogs
+    log("No argument found\n");
 
     return -1;
 }
 
-int HandleRegs(asm_t* asm_code, char* reg_name)
+int HandleRegname(asm_t* asm_code, char* reg_name)
 {
     if (reg_name[0] != 'r' || reg_name[2] != 'x')
     {
@@ -371,7 +418,7 @@ int read_file(const char* filename,
 
     if (!text_file)    return -1;
 
-    ptr_text_buf->Size = safe_def_int(get_file_size(text_file) + 1, NULL + 1);
+    ptr_text_buf->Size = safe_def_int(get_file_size(text_file) + 1, 1);
 
     log("Size of file is: %d bytes.\n", ptr_text_buf->Size);
 
@@ -397,6 +444,8 @@ int make_pointers_to_lines(type_buf_char* ptr_text_buf,
     ptr_arr_structs->Size      = ptr_text_buf->Num_lines;
 
     create_array_structs(ptr_text_buf, ptr_arr_structs);
+
+    return 0;
 }
 
 FILE* open_file_rmode(const char* filename)
@@ -495,7 +544,7 @@ int count_lines(type_buf_char* ptr_text_buf)
     return num_lines;
 }
 
-static int is_line_empty(char* ptr_line)
+int is_line_empty(char* ptr_line)
 {
     while (!end_of_line(*ptr_line))
     {
@@ -517,9 +566,9 @@ int get_file_size(FILE* file)
 
     int errcode = fstat(fileno(file), &buf);
 
-    Assert(errcode != NULL);
+    Assert(errcode != 0);
 
-    printf("File size = %d\n", buf.st_size);
+    printf("File size = %d\n", (int)buf.st_size);
 
     return buf.st_size;
 }
@@ -545,7 +594,7 @@ int end_of_line(char sym)
             true : false;
 }
 
-int WriteASM(int* ptr_asm, char* filename, size_t buf_size)
+int WriteASM(int* ptr_asm, const char* filename, size_t buf_size)
 {
     FILE* file = open_Wfile(filename);
 
@@ -564,18 +613,20 @@ int WriteHead(FILE* file, size_t buf_size)
 
     fwrite(SIGNATURE, sizeof(char), strlen(SIGNATURE), file);
 
-    //fputc('\n', file);
+    size_t version = ReadVersion(VERSION_FILE);
+
+    UpdateVersion(VERSION_FILE, &version);
+
+    WriteVersion(file, version);
 
     log("written size: %d\n", buf_size);
 
     fwrite(&buf_size, sizeof(int), 1, file);
 
-    //fputc('\n', file);
-
     return 0;
 }
 
-FILE* open_Wfile(char* filename)
+FILE* open_Wfile(const char* filename)
 {
     FILE* w_file = fopen(filename, "wb");
 
@@ -604,6 +655,41 @@ int put_buffer(FILE* w_file, int* ptr_asm, size_t buf_size)
     }
 
     log("File is written successfully\n");
+
+    return 0;
+}
+
+size_t ReadVersion(const char* filename)
+{
+    FILE* vers_file = open_file_rmode(filename);
+
+    if(vers_file == NULL) return -1;
+
+    size_t version = 0;
+
+    fread(&version, sizeof(int), 1, vers_file);
+
+    fclose(vers_file);
+
+    return version;
+}
+
+int UpdateVersion(const char* filename, size_t* ptr_version)
+{
+    *ptr_version = (*ptr_version + 1) % VERSION_REPEAT;
+
+    FILE* vers_file = open_Wfile(filename);
+
+    fwrite(ptr_version, sizeof(int), 1, vers_file);
+
+    fclose(vers_file);
+
+    return 0;
+}
+
+int WriteVersion(FILE* file, size_t version)
+{
+    fwrite(&version, sizeof(int), 1, file);
 
     return 0;
 }

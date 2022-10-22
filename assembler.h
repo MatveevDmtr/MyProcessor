@@ -13,6 +13,7 @@
 #include "StackConfig.h"
 #include "Cpu_Config.h"
 
+
 #define FREE(ptr)                                                   \
 {                                                                   \
     Assert(ptr == NULL);                                            \
@@ -21,6 +22,8 @@
 }
 
 const size_t MAX_LEN_LABEL_NAME = 30;
+
+const size_t MAX_LEN_MASK = 15;
 
 typedef struct LABEL
 {
@@ -62,12 +65,32 @@ enum CMD_NAMES
 
 int PrintASM(asm_t* asm_code);
 
+int SkipSpace(char** cursor);
+
+int HandleRegAndNum(asm_t* asm_code, size_t      cmd_code,
+                                     char*       ptr_arg,
+                                     const char* mask1,
+                                     const char* mask2,
+                                     const char* ram_mask1,
+                                     const char* ram_mask2);
+
+int HandleNum(asm_t* asm_code, size_t      cmd_code,
+                               char*       ptr_arg,
+                               const char* mask1,
+                               const char* ram_mask1);
+
+int HandleReg(asm_t* asm_code, size_t      cmd_code,
+                               char*       ptr_arg,
+                               const char* mask1,
+                               const char* ram_mask1);
 
 elem_t PutArg(size_t       cmd_code,
               char*        ptr_arg,
               asm_t*       asm_code);
 
-int HandleRegs(asm_t* asm_code, char* reg_name);
+int HandleRegname(asm_t* asm_code, char* reg_name);
+
+int SearchLabelByName(label_field* labels, char* name);
 
 int UserCodeToASM(type_buf_char*    ptr_user_code,
                   type_buf_structs* ptr_arr_structs,
@@ -85,15 +108,21 @@ int FuncLab(char*        ptr_arg,
 size_t IdentifyNumLabel(char*        ptr_arg,
                         asm_t*       asm_code);
 
-int WriteASM(int* ptr_asm, char* filename, size_t buf_size);
-
-FILE* open_Wfile(char* filename);
+int WriteASM(int* ptr_asm, const char* filename, size_t buf_size);
 
 int WriteHead(FILE* file, size_t buf_size);
 
 int put_buffer(FILE* w_file, int* ptr_asm, size_t buf_size);
 
-int Assemble();
+size_t ReadVersion(const char* filename);
+
+int UpdateVersion(const char* filename, size_t* ptr_version);
+
+int WriteVersion(FILE* file, size_t version);
+
+int handle_cmd_args(int argc, char** argv);
+
+int Assemble(int argc, char** argv);
 
 
 #define allocate_array(type, num_elems)                             \

@@ -109,6 +109,7 @@ void PrintFatalError(const char* func, int line, const char* text)
     fflush(LOG_FILE);
 }
 
+#undef log(format, ...)
 void log(const char* format, ...)
 {
     va_list args;
@@ -121,3 +122,4 @@ void log(const char* format, ...)
 
     va_end(args);
 }
+;

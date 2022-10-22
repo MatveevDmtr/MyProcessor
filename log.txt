@@ -2,21 +2,22 @@
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 --------------------Start program--------------------
-Size of file is: 809 bytes.
+START IN DEFAULT MODE
+Size of file is: 1984 bytes.
 Type_calloc: char
 Sizeof type: 4
-Calloc returned: 02D70048
+Calloc returned: 009E4790
 
-buffer size: 809
-fread number of symbols: 808
-Num lines: 78
+buffer size: 1984
+fread number of symbols: 1983
+Num lines: 143
 Type_calloc: type_prop_line
 Sizeof type: 4
-Calloc returned: 009CECE8
+Calloc returned: 009E0E60
 
 Type_calloc: int
 Sizeof type: 4
-Calloc returned: 02D70380
+Calloc returned: 009E4F58
 
 Command found: name
 case name
@@ -26,76 +27,68 @@ Command found: name
 case name
 Command found: name
 case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700B8, first sym to scan: [
-case [d]
+ptr_arg: 009E4897, first sym to scan: [
+case d
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700CD, first sym to scan: [
-case [d]
+ptr_arg: 009E48AC, first sym to scan: [
+case d
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700E2, first sym to scan: [
-case [d]
+ptr_arg: 009E48C1, first sym to scan: [
+case d
 Command found: call
 case jump
 Command found: call
 case jump
 Command found: call
 case jump
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70128, first sym to scan: [
-case [d]
-Command found: copy
-Command found: pop
-cmd_code: 2
-ptr_arg: 02D70137, first sym to scan: [
-case [d]
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70141, first sym to scan: [
-case [d]
-Command found: copy
-Command found: pop
-cmd_code: 2
-ptr_arg: 02D70150, first sym to scan: [
-case [d]
-Command found: add
-Command found: out
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70164, first sym to scan: [
-case [d]
-Command found: push
-cmd_code: 1
-ptr_arg: 02D7016E, first sym to scan: [
-case [d]
-Command found: sub
-Command found: out
+Command found: call
+case jump
+Command found: call
+case jump
+Command found: call
+case jump
 Command found: hlt
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701BB, first sym to scan: [
-case [d]
+ptr_arg: 009E4980, first sym to scan: [
+case d
 Command found: sqrt
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701CB, first sym to scan: 2
-simple-dimple
+ptr_arg: 009E4998, first sym to scan: 2
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701D3, first sym to scan: r
+ptr_arg: 009E49A4, first sym to scan: r
 case rcx
 reg_num: 0
 
@@ -103,30 +96,106 @@ Command found: mul
 Command found: div
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D701E6, first sym to scan: [
-case [d]
+ptr_arg: 009E49C3, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70223, first sym to scan: r
+ptr_arg: 009E4A0A, first sym to scan: r
+case rcx
+reg_num: 0
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A18, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A4A, first sym to scan: r
 case rcx
 reg_num: 1
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7022D, first sym to scan: -
-simple-dimple
+ptr_arg: 009E4A58, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A93, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AA1, first sym to scan: r
+case rcx
+reg_num: 1
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AAF, first sym to scan: -
+case d
+Command found: mul
+Command found: div
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AF9, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4B07, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: call
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4B55, first sym to scan: 8
+case d
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4BB1, first sym to scan: r
+case rcx
+reg_num: 1
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4BBF, first sym to scan: -
+case d
 Command found: mul
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7023B, first sym to scan: 2
-simple-dimple
+ptr_arg: 009E4BD5, first sym to scan: 2
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70243, first sym to scan: r
+ptr_arg: 009E4BE1, first sym to scan: r
 case rcx
 reg_num: 0
 
@@ -134,15 +203,15 @@ Command found: mul
 Command found: div
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70256, first sym to scan: [
-case [d]
+ptr_arg: 009E4C00, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7028E, first sym to scan: r
+ptr_arg: 009E4C44, first sym to scan: r
 case rcx
 reg_num: 1
 
@@ -150,17 +219,17 @@ Command found: copy
 Command found: mul
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702A3, first sym to scan: -
-simple-dimple
+ptr_arg: 009E4C65, first sym to scan: -
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702AC, first sym to scan: r
+ptr_arg: 009E4C72, first sym to scan: r
 case rcx
 reg_num: 0
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702B6, first sym to scan: r
+ptr_arg: 009E4C80, first sym to scan: r
 case rcx
 reg_num: 2
 
@@ -170,55 +239,130 @@ Command found: add
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D702D4, first sym to scan: [
-case [d]
+ptr_arg: 009E4CB2, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70306, first sym to scan: [
-case [d]
+ptr_arg: 009E4CDF, first sym to scan: [
+case d
+Command found: copy
+Command found: copy
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70315, first sym to scan: [
-case [d]
+ptr_arg: 009E4D0B, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D19, first sym to scan: 0
+case d
+Command found: ja
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D35, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D70, first sym to scan: -
+case d
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4DB7, first sym to scan: [
+case d
+Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D7031E, first sym to scan: r
+ptr_arg: 009E4DCE, first sym to scan: [
+case d
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4DDB, first sym to scan: r
 case rcx
 reg_num: 0
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7032A, first sym to scan: [
-case [d]
+ptr_arg: 009E4DEB, first sym to scan: [
+case d
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70339, first sym to scan: [
-case [d]
+ptr_arg: 009E4E02, first sym to scan: [
+case d
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70342, first sym to scan: r
+ptr_arg: 009E4E0F, first sym to scan: r
 case rcx
 reg_num: 1
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7034E, first sym to scan: [
-case [d]
+ptr_arg: 009E4E1F, first sym to scan: [
+case d
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D7035D, first sym to scan: [
-case [d]
+ptr_arg: 009E4E36, first sym to scan: [
+case d
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70366, first sym to scan: r
+ptr_arg: 009E4E43, first sym to scan: r
 case rcx
 reg_num: 2
 
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4E6F, first sym to scan: [
+case d
+Command found: copy
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4E86, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4E94, first sym to scan: [
+case d
+Command found: copy
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4EAB, first sym to scan: [
+case d
+Command found: add
+Command found: out
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4ECB, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4ED9, first sym to scan: [
+case d
+Command found: sub
+Command found: out
+Command found: ret
+Command found: lbl
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4F2F, first sym to scan: [
+case d
+Command found: out
+Command found: hlt
 Command found: ret
 
 
@@ -242,96 +386,173 @@ ASM[014]: 19
 ASM[015]: 0
 ASM[016]: 19
 ASM[017]: 0
-ASM[018]: 161
-ASM[019]: 4
-ASM[020]: 21
-ASM[021]: 162
-ASM[022]: 4
-ASM[023]: 161
-ASM[024]: 5
-ASM[025]: 21
-ASM[026]: 162
-ASM[027]: 5
+ASM[018]: 19
+ASM[019]: 0
+ASM[020]: 19
+ASM[021]: 0
+ASM[022]: 19
+ASM[023]: 0
+ASM[024]: 0
+ASM[025]: 19
+ASM[026]: 0
+ASM[027]: 161
 ASM[028]: 3
-ASM[029]: 8
-ASM[030]: 161
-ASM[031]: 4
-ASM[032]: 161
-ASM[033]: 5
-ASM[034]: 4
-ASM[035]: 8
-ASM[036]: 0
-ASM[037]: 19
-ASM[038]: 0
-ASM[039]: 161
-ASM[040]: 3
-ASM[041]: 22
-ASM[042]: 33
-ASM[043]: 2
-ASM[044]: 65
-ASM[045]: 0
-ASM[046]: 5
-ASM[047]: 6
-ASM[048]: 162
-ASM[049]: 5
-ASM[050]: 20
-ASM[051]: 19
-ASM[052]: 0
-ASM[053]: 65
-ASM[054]: 1
-ASM[055]: 33
-ASM[056]: -1
-ASM[057]: 5
-ASM[058]: 33
-ASM[059]: 2
-ASM[060]: 65
-ASM[061]: 0
+ASM[029]: 22
+ASM[030]: 33
+ASM[031]: 2
+ASM[032]: 65
+ASM[033]: 0
+ASM[034]: 5
+ASM[035]: 6
+ASM[036]: 162
+ASM[037]: 5
+ASM[038]: 20
+ASM[039]: 19
+ASM[040]: 0
+ASM[041]: 65
+ASM[042]: 0
+ASM[043]: 33
+ASM[044]: 0
+ASM[045]: 14
+ASM[046]: 0
+ASM[047]: 20
+ASM[048]: 65
+ASM[049]: 1
+ASM[050]: 33
+ASM[051]: 0
+ASM[052]: 14
+ASM[053]: 0
+ASM[054]: 19
+ASM[055]: 0
+ASM[056]: 65
+ASM[057]: 2
+ASM[058]: 65
+ASM[059]: 1
+ASM[060]: 33
+ASM[061]: -1
 ASM[062]: 5
 ASM[063]: 6
-ASM[064]: 162
-ASM[065]: 4
+ASM[064]: 8
+ASM[065]: 0
 ASM[066]: 20
-ASM[067]: 19
-ASM[068]: 0
-ASM[069]: 65
-ASM[070]: 1
-ASM[071]: 21
-ASM[072]: 5
-ASM[073]: 33
-ASM[074]: -4
-ASM[075]: 65
-ASM[076]: 0
-ASM[077]: 65
-ASM[078]: 2
-ASM[079]: 5
-ASM[080]: 5
-ASM[081]: 3
-ASM[082]: 21
-ASM[083]: 162
-ASM[084]: 3
-ASM[085]: 20
-ASM[086]: 161
-ASM[087]: 0
-ASM[088]: 21
-ASM[089]: 162
-ASM[090]: 0
-ASM[091]: 66
-ASM[092]: 0
-ASM[093]: 161
-ASM[094]: 1
-ASM[095]: 21
-ASM[096]: 162
-ASM[097]: 1
-ASM[098]: 66
-ASM[099]: 1
-ASM[100]: 161
-ASM[101]: 2
-ASM[102]: 21
-ASM[103]: 162
-ASM[104]: 2
-ASM[105]: 66
-ASM[106]: 2
-ASM[107]: 20
+ASM[067]: 65
+ASM[068]: 2
+ASM[069]: 33
+ASM[070]: 0
+ASM[071]: 14
+ASM[072]: 0
+ASM[073]: 19
+ASM[074]: 0
+ASM[075]: 20
+ASM[076]: 33
+ASM[077]: 8888
+ASM[078]: 8
+ASM[079]: 0
+ASM[080]: 20
+ASM[081]: 19
+ASM[082]: 0
+ASM[083]: 65
+ASM[084]: 1
+ASM[085]: 33
+ASM[086]: -1
+ASM[087]: 5
+ASM[088]: 33
+ASM[089]: 2
+ASM[090]: 65
+ASM[091]: 0
+ASM[092]: 5
+ASM[093]: 6
+ASM[094]: 162
+ASM[095]: 4
+ASM[096]: 20
+ASM[097]: 19
+ASM[098]: 0
+ASM[099]: 65
+ASM[100]: 1
+ASM[101]: 21
+ASM[102]: 5
+ASM[103]: 33
+ASM[104]: -4
+ASM[105]: 65
+ASM[106]: 0
+ASM[107]: 65
+ASM[108]: 2
+ASM[109]: 5
+ASM[110]: 5
+ASM[111]: 3
+ASM[112]: 21
+ASM[113]: 162
+ASM[114]: 3
+ASM[115]: 20
+ASM[116]: 161
+ASM[117]: 3
+ASM[118]: 21
+ASM[119]: 21
+ASM[120]: 21
+ASM[121]: 162
+ASM[122]: 3
+ASM[123]: 33
+ASM[124]: 0
+ASM[125]: 12
+ASM[126]: 0
+ASM[127]: 33
+ASM[128]: 0
+ASM[129]: 14
+ASM[130]: 0
+ASM[131]: 20
+ASM[132]: 33
+ASM[133]: -69420
+ASM[134]: 8
+ASM[135]: 0
+ASM[136]: 20
+ASM[137]: 161
+ASM[138]: 0
+ASM[139]: 21
+ASM[140]: 162
+ASM[141]: 0
+ASM[142]: 66
+ASM[143]: 0
+ASM[144]: 161
+ASM[145]: 1
+ASM[146]: 21
+ASM[147]: 162
+ASM[148]: 1
+ASM[149]: 66
+ASM[150]: 1
+ASM[151]: 161
+ASM[152]: 2
+ASM[153]: 21
+ASM[154]: 162
+ASM[155]: 2
+ASM[156]: 66
+ASM[157]: 2
+ASM[158]: 20
+ASM[159]: 161
+ASM[160]: 4
+ASM[161]: 21
+ASM[162]: 162
+ASM[163]: 4
+ASM[164]: 161
+ASM[165]: 5
+ASM[166]: 21
+ASM[167]: 162
+ASM[168]: 5
+ASM[169]: 3
+ASM[170]: 8
+ASM[171]: 161
+ASM[172]: 4
+ASM[173]: 161
+ASM[174]: 5
+ASM[175]: 4
+ASM[176]: 8
+ASM[177]: 20
+ASM[178]: 19
+ASM[179]: 82
+ASM[180]: 161
+ASM[181]: 4
+ASM[182]: 8
+ASM[183]: 0
+ASM[184]: 20
 
 =======  END ASM CODE =======
 
@@ -343,76 +564,68 @@ Command found: name
 case name
 Command found: name
 case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
+Command found: name
+case name
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700B8, first sym to scan: [
-case [d]
+ptr_arg: 009E4897, first sym to scan: [
+case d
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700CD, first sym to scan: [
-case [d]
+ptr_arg: 009E48AC, first sym to scan: [
+case d
 Command found: in
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D700E2, first sym to scan: [
-case [d]
+ptr_arg: 009E48C1, first sym to scan: [
+case d
 Command found: call
 case jump
 Command found: call
 case jump
 Command found: call
 case jump
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70128, first sym to scan: [
-case [d]
-Command found: copy
-Command found: pop
-cmd_code: 2
-ptr_arg: 02D70137, first sym to scan: [
-case [d]
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70141, first sym to scan: [
-case [d]
-Command found: copy
-Command found: pop
-cmd_code: 2
-ptr_arg: 02D70150, first sym to scan: [
-case [d]
-Command found: add
-Command found: out
-Command found: push
-cmd_code: 1
-ptr_arg: 02D70164, first sym to scan: [
-case [d]
-Command found: push
-cmd_code: 1
-ptr_arg: 02D7016E, first sym to scan: [
-case [d]
-Command found: sub
-Command found: out
+Command found: call
+case jump
+Command found: call
+case jump
+Command found: call
+case jump
 Command found: hlt
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701BB, first sym to scan: [
-case [d]
+ptr_arg: 009E4980, first sym to scan: [
+case d
 Command found: sqrt
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701CB, first sym to scan: 2
-simple-dimple
+ptr_arg: 009E4998, first sym to scan: 2
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D701D3, first sym to scan: r
+ptr_arg: 009E49A4, first sym to scan: r
 case rcx
 reg_num: 0
 
@@ -420,30 +633,106 @@ Command found: mul
 Command found: div
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D701E6, first sym to scan: [
-case [d]
+ptr_arg: 009E49C3, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70223, first sym to scan: r
+ptr_arg: 009E4A0A, first sym to scan: r
+case rcx
+reg_num: 0
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A18, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A4A, first sym to scan: r
 case rcx
 reg_num: 1
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7022D, first sym to scan: -
-simple-dimple
+ptr_arg: 009E4A58, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4A93, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AA1, first sym to scan: r
+case rcx
+reg_num: 1
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AAF, first sym to scan: -
+case d
+Command found: mul
+Command found: div
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4AF9, first sym to scan: r
+case rcx
+reg_num: 2
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4B07, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: call
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4B55, first sym to scan: 8
+case d
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4BB1, first sym to scan: r
+case rcx
+reg_num: 1
+
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4BBF, first sym to scan: -
+case d
 Command found: mul
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7023B, first sym to scan: 2
-simple-dimple
+ptr_arg: 009E4BD5, first sym to scan: 2
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70243, first sym to scan: r
+ptr_arg: 009E4BE1, first sym to scan: r
 case rcx
 reg_num: 0
 
@@ -451,15 +740,15 @@ Command found: mul
 Command found: div
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70256, first sym to scan: [
-case [d]
+ptr_arg: 009E4C00, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: call
 case jump
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7028E, first sym to scan: r
+ptr_arg: 009E4C44, first sym to scan: r
 case rcx
 reg_num: 1
 
@@ -467,17 +756,17 @@ Command found: copy
 Command found: mul
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702A3, first sym to scan: -
-simple-dimple
+ptr_arg: 009E4C65, first sym to scan: -
+case d
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702AC, first sym to scan: r
+ptr_arg: 009E4C72, first sym to scan: r
 case rcx
 reg_num: 0
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D702B6, first sym to scan: r
+ptr_arg: 009E4C80, first sym to scan: r
 case rcx
 reg_num: 2
 
@@ -487,55 +776,130 @@ Command found: add
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D702D4, first sym to scan: [
-case [d]
+ptr_arg: 009E4CB2, first sym to scan: [
+case d
 Command found: ret
 Command found: lbl
 Command found: push
 cmd_code: 1
-ptr_arg: 02D70306, first sym to scan: [
-case [d]
+ptr_arg: 009E4CDF, first sym to scan: [
+case d
+Command found: copy
+Command found: copy
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70315, first sym to scan: [
-case [d]
+ptr_arg: 009E4D0B, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D19, first sym to scan: 0
+case d
+Command found: ja
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D35, first sym to scan: 0
+case d
+Command found: je
+case jump
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4D70, first sym to scan: -
+case d
+Command found: out
+Command found: hlt
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4DB7, first sym to scan: [
+case d
+Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D7031E, first sym to scan: r
+ptr_arg: 009E4DCE, first sym to scan: [
+case d
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4DDB, first sym to scan: r
 case rcx
 reg_num: 0
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7032A, first sym to scan: [
-case [d]
+ptr_arg: 009E4DEB, first sym to scan: [
+case d
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70339, first sym to scan: [
-case [d]
+ptr_arg: 009E4E02, first sym to scan: [
+case d
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70342, first sym to scan: r
+ptr_arg: 009E4E0F, first sym to scan: r
 case rcx
 reg_num: 1
 
 Command found: push
 cmd_code: 1
-ptr_arg: 02D7034E, first sym to scan: [
-case [d]
+ptr_arg: 009E4E1F, first sym to scan: [
+case d
 Command found: copy
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D7035D, first sym to scan: [
-case [d]
+ptr_arg: 009E4E36, first sym to scan: [
+case d
 Command found: pop
 cmd_code: 2
-ptr_arg: 02D70366, first sym to scan: r
+ptr_arg: 009E4E43, first sym to scan: r
 case rcx
 reg_num: 2
 
+Command found: ret
+Command found: lbl
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4E6F, first sym to scan: [
+case d
+Command found: copy
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4E86, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4E94, first sym to scan: [
+case d
+Command found: copy
+Command found: pop
+cmd_code: 2
+ptr_arg: 009E4EAB, first sym to scan: [
+case d
+Command found: add
+Command found: out
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4ECB, first sym to scan: [
+case d
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4ED9, first sym to scan: [
+case d
+Command found: sub
+Command found: out
+Command found: ret
+Command found: lbl
+Command found: call
+case jump
+Command found: push
+cmd_code: 1
+ptr_arg: 009E4F2F, first sym to scan: [
+case d
+Command found: out
+Command found: hlt
 Command found: ret
 
 
@@ -554,115 +918,192 @@ ASM[009]: 21
 ASM[010]: 162
 ASM[011]: 2
 ASM[012]: 19
-ASM[013]: 52
+ASM[013]: 40
 ASM[014]: 19
-ASM[015]: 68
+ASM[015]: 82
 ASM[016]: 19
-ASM[017]: 38
-ASM[018]: 161
-ASM[019]: 4
-ASM[020]: 21
-ASM[021]: 162
-ASM[022]: 4
-ASM[023]: 161
-ASM[024]: 5
-ASM[025]: 21
-ASM[026]: 162
-ASM[027]: 5
+ASM[017]: 98
+ASM[018]: 19
+ASM[019]: 117
+ASM[020]: 19
+ASM[021]: 26
+ASM[022]: 19
+ASM[023]: 160
+ASM[024]: 0
+ASM[025]: 19
+ASM[026]: 138
+ASM[027]: 161
 ASM[028]: 3
-ASM[029]: 8
-ASM[030]: 161
-ASM[031]: 4
-ASM[032]: 161
-ASM[033]: 5
-ASM[034]: 4
-ASM[035]: 8
-ASM[036]: 0
-ASM[037]: 19
-ASM[038]: 87
-ASM[039]: 161
-ASM[040]: 3
-ASM[041]: 22
-ASM[042]: 33
-ASM[043]: 2
-ASM[044]: 65
-ASM[045]: 0
-ASM[046]: 5
-ASM[047]: 6
-ASM[048]: 162
-ASM[049]: 5
-ASM[050]: 20
-ASM[051]: 19
-ASM[052]: 87
-ASM[053]: 65
-ASM[054]: 1
-ASM[055]: 33
-ASM[056]: -1
-ASM[057]: 5
-ASM[058]: 33
-ASM[059]: 2
-ASM[060]: 65
-ASM[061]: 0
+ASM[029]: 22
+ASM[030]: 33
+ASM[031]: 2
+ASM[032]: 65
+ASM[033]: 0
+ASM[034]: 5
+ASM[035]: 6
+ASM[036]: 162
+ASM[037]: 5
+ASM[038]: 20
+ASM[039]: 19
+ASM[040]: 138
+ASM[041]: 65
+ASM[042]: 0
+ASM[043]: 33
+ASM[044]: 0
+ASM[045]: 14
+ASM[046]: 49
+ASM[047]: 20
+ASM[048]: 65
+ASM[049]: 1
+ASM[050]: 33
+ASM[051]: 0
+ASM[052]: 14
+ASM[053]: 68
+ASM[054]: 19
+ASM[055]: 138
+ASM[056]: 65
+ASM[057]: 2
+ASM[058]: 65
+ASM[059]: 1
+ASM[060]: 33
+ASM[061]: -1
 ASM[062]: 5
 ASM[063]: 6
-ASM[064]: 162
-ASM[065]: 4
+ASM[064]: 8
+ASM[065]: 0
 ASM[066]: 20
-ASM[067]: 19
-ASM[068]: 87
-ASM[069]: 65
-ASM[070]: 1
-ASM[071]: 21
-ASM[072]: 5
-ASM[073]: 33
-ASM[074]: -4
-ASM[075]: 65
-ASM[076]: 0
-ASM[077]: 65
-ASM[078]: 2
-ASM[079]: 5
-ASM[080]: 5
-ASM[081]: 3
-ASM[082]: 21
-ASM[083]: 162
-ASM[084]: 3
-ASM[085]: 20
-ASM[086]: 161
-ASM[087]: 0
-ASM[088]: 21
-ASM[089]: 162
-ASM[090]: 0
-ASM[091]: 66
-ASM[092]: 0
-ASM[093]: 161
-ASM[094]: 1
-ASM[095]: 21
-ASM[096]: 162
-ASM[097]: 1
-ASM[098]: 66
-ASM[099]: 1
-ASM[100]: 161
-ASM[101]: 2
-ASM[102]: 21
-ASM[103]: 162
-ASM[104]: 2
-ASM[105]: 66
-ASM[106]: 2
-ASM[107]: 20
+ASM[067]: 65
+ASM[068]: 2
+ASM[069]: 33
+ASM[070]: 0
+ASM[071]: 14
+ASM[072]: 77
+ASM[073]: 19
+ASM[074]: 133
+ASM[075]: 20
+ASM[076]: 33
+ASM[077]: 8888
+ASM[078]: 8
+ASM[079]: 0
+ASM[080]: 20
+ASM[081]: 19
+ASM[082]: 138
+ASM[083]: 65
+ASM[084]: 1
+ASM[085]: 33
+ASM[086]: -1
+ASM[087]: 5
+ASM[088]: 33
+ASM[089]: 2
+ASM[090]: 65
+ASM[091]: 0
+ASM[092]: 5
+ASM[093]: 6
+ASM[094]: 162
+ASM[095]: 4
+ASM[096]: 20
+ASM[097]: 19
+ASM[098]: 138
+ASM[099]: 65
+ASM[100]: 1
+ASM[101]: 21
+ASM[102]: 5
+ASM[103]: 33
+ASM[104]: -4
+ASM[105]: 65
+ASM[106]: 0
+ASM[107]: 65
+ASM[108]: 2
+ASM[109]: 5
+ASM[110]: 5
+ASM[111]: 3
+ASM[112]: 21
+ASM[113]: 162
+ASM[114]: 3
+ASM[115]: 20
+ASM[116]: 161
+ASM[117]: 3
+ASM[118]: 21
+ASM[119]: 21
+ASM[120]: 21
+ASM[121]: 162
+ASM[122]: 3
+ASM[123]: 33
+ASM[124]: 0
+ASM[125]: 12
+ASM[126]: 133
+ASM[127]: 33
+ASM[128]: 0
+ASM[129]: 14
+ASM[130]: 179
+ASM[131]: 20
+ASM[132]: 33
+ASM[133]: -69420
+ASM[134]: 8
+ASM[135]: 0
+ASM[136]: 20
+ASM[137]: 161
+ASM[138]: 0
+ASM[139]: 21
+ASM[140]: 162
+ASM[141]: 0
+ASM[142]: 66
+ASM[143]: 0
+ASM[144]: 161
+ASM[145]: 1
+ASM[146]: 21
+ASM[147]: 162
+ASM[148]: 1
+ASM[149]: 66
+ASM[150]: 1
+ASM[151]: 161
+ASM[152]: 2
+ASM[153]: 21
+ASM[154]: 162
+ASM[155]: 2
+ASM[156]: 66
+ASM[157]: 2
+ASM[158]: 20
+ASM[159]: 161
+ASM[160]: 4
+ASM[161]: 21
+ASM[162]: 162
+ASM[163]: 4
+ASM[164]: 161
+ASM[165]: 5
+ASM[166]: 21
+ASM[167]: 162
+ASM[168]: 5
+ASM[169]: 3
+ASM[170]: 8
+ASM[171]: 161
+ASM[172]: 4
+ASM[173]: 161
+ASM[174]: 5
+ASM[175]: 4
+ASM[176]: 8
+ASM[177]: 20
+ASM[178]: 19
+ASM[179]: 82
+ASM[180]: 161
+ASM[181]: 4
+ASM[182]: 8
+ASM[183]: 0
+ASM[184]: 20
 
 =======  END ASM CODE =======
 
 length signature: 3
-written size: 108
+written size: 185
 File is written successfully
 
 ----------CPU----------
 stk1 created
 Lines read: 1
 sign read: MDA, sign cpu: MDA
-Size already read: 108
+Size already read: 185
 Code was read
-ip: 0, Size: 108
+ip: 0, Size: 185
 cmd_code wo mask: 7
 cmd_code wo mask: 21
 value in copy: 1
@@ -671,13 +1112,13 @@ start GetArg
 code of push: 162
 cmd_code wo mask: 7
 cmd_code wo mask: 21
-value in copy: 7
+value in copy: 2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
 cmd_code wo mask: 7
 cmd_code wo mask: 21
-value in copy: 8
+value in copy: -2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -700,7 +1141,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 7
+value in copy: 2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -713,7 +1154,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 8
+value in copy: -2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -733,7 +1174,62 @@ start GetArg
 code of push: 33
 GetArg wo RAM
 Arg at start: 0
-arg of GetArg wo RAM: -10000
+arg of GetArg wo RAM: 0
+cmd_code wo mask: 14
+cmd_code wo mask: 20
+cmd_code wo mask: 19
+cmd_code wo mask: 19
+cmd_code wo mask: 161
+start GetArg
+code of push: 161
+cmd_code wo mask: 21
+value in copy: 1
+cmd_code wo mask: 162
+start GetArg
+code of push: 162
+cmd_code wo mask: 66
+start GetArg
+code of push: 66
+GetArg wo RAM
+Arg at start: 0
+cmd_code wo mask: 161
+start GetArg
+code of push: 161
+cmd_code wo mask: 21
+value in copy: 2
+cmd_code wo mask: 162
+start GetArg
+code of push: 162
+cmd_code wo mask: 66
+start GetArg
+code of push: 66
+GetArg wo RAM
+Arg at start: 0
+cmd_code wo mask: 161
+start GetArg
+code of push: 161
+cmd_code wo mask: 21
+value in copy: -2
+cmd_code wo mask: 162
+start GetArg
+code of push: 162
+cmd_code wo mask: 66
+start GetArg
+code of push: 66
+GetArg wo RAM
+Arg at start: 0
+cmd_code wo mask: 20
+cmd_code wo mask: 65
+start GetArg
+code of push: 65
+GetArg wo RAM
+Arg at start: 0
+cmd_code wo mask: 33
+start GetArg
+code of push: 33
+GetArg wo RAM
+Arg at start: 0
+arg of GetArg wo RAM: -1000
 cmd_code wo mask: 5
 in mul
 cmd_code wo mask: 33
@@ -741,7 +1237,7 @@ start GetArg
 code of push: 33
 GetArg wo RAM
 Arg at start: 0
-arg of GetArg wo RAM: 20000
+arg of GetArg wo RAM: 2000
 cmd_code wo mask: 65
 start GetArg
 code of push: 65
@@ -751,7 +1247,7 @@ cmd_code wo mask: 5
 in mul
 cmd_code wo mask: 6
 in div
-a: 2, b: -7
+a: 2, b: -2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -775,7 +1271,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 7
+value in copy: 2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -788,7 +1284,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 8
+value in copy: -2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -804,7 +1300,7 @@ code of push: 65
 GetArg wo RAM
 Arg at start: 0
 cmd_code wo mask: 21
-value in copy: 7
+value in copy: 2
 cmd_code wo mask: 5
 in mul
 cmd_code wo mask: 33
@@ -812,7 +1308,7 @@ start GetArg
 code of push: 33
 GetArg wo RAM
 Arg at start: 0
-arg of GetArg wo RAM: -40000
+arg of GetArg wo RAM: -4000
 cmd_code wo mask: 65
 start GetArg
 code of push: 65
@@ -829,12 +1325,40 @@ cmd_code wo mask: 5
 in mul
 cmd_code wo mask: 3
 in add
-a: -32, b: 49
-a+b: 17cmd_code wo mask: 21
-value in copy: 17
+a: 8, b: 4
+a+b: 12cmd_code wo mask: 21
+value in copy: 12
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
+cmd_code wo mask: 20
+cmd_code wo mask: 19
+cmd_code wo mask: 161
+start GetArg
+code of push: 161
+cmd_code wo mask: 21
+value in copy: 12
+cmd_code wo mask: 21
+value in copy: 12
+cmd_code wo mask: 21
+value in copy: 12
+cmd_code wo mask: 162
+start GetArg
+code of push: 162
+cmd_code wo mask: 33
+start GetArg
+code of push: 33
+GetArg wo RAM
+Arg at start: 0
+arg of GetArg wo RAM: 0
+cmd_code wo mask: 12
+cmd_code wo mask: 33
+start GetArg
+code of push: 33
+GetArg wo RAM
+Arg at start: 0
+arg of GetArg wo RAM: 0
+cmd_code wo mask: 14
 cmd_code wo mask: 20
 cmd_code wo mask: 19
 cmd_code wo mask: 19
@@ -855,7 +1379,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 7
+value in copy: 2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -868,7 +1392,7 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 8
+value in copy: -2
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -882,13 +1406,13 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 22
-sqrt from val: 4.12311
+sqrt from val: 3.4641
 cmd_code wo mask: 33
 start GetArg
 code of push: 33
 GetArg wo RAM
 Arg at start: 0
-arg of GetArg wo RAM: 20000
+arg of GetArg wo RAM: 2000
 cmd_code wo mask: 65
 start GetArg
 code of push: 65
@@ -898,16 +1422,17 @@ cmd_code wo mask: 5
 in mul
 cmd_code wo mask: 6
 in div
-a: 2, b: 4.1231
+a: 2, b: 3.464
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
 cmd_code wo mask: 20
+cmd_code wo mask: 19
 cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: -3.5
+value in copy: -1
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
@@ -915,16 +1440,16 @@ cmd_code wo mask: 161
 start GetArg
 code of push: 161
 cmd_code wo mask: 21
-value in copy: 2.0615
+value in copy: 1.731
 cmd_code wo mask: 162
 start GetArg
 code of push: 162
 cmd_code wo mask: 3
 in add
-a: 2.0615, b: -3.5
-a+b: -1.4385cmd_code wo mask: 8
+a: 1.731, b: -1
+a+b: 0.731cmd_code wo mask: 8
 cuming out
-val to out: -1.4384
+val to out: 0.731
 cmd_code wo mask: 161
 start GetArg
 code of push: 161
@@ -935,9 +1460,32 @@ cmd_code wo mask: 4
 in sub
 cmd_code wo mask: 8
 cuming out
-val to out: -5.5615
+val to out: -2.731
+cmd_code wo mask: 20
 cmd_code wo mask: 0
 Finish running
+
+----------DISASM----------
+disasm created
+Lines read: 1
+sign read: MDA, sign cpu: MDA
+Size already read: 101
+Code was read
+ip: 0, Size: 101
+cmd_code wo mask: 185
+
+In int Disassemble(disasm_t*) (line 151):
+-------------------------------------
+| COMMAND ERROR: Unexpected command |
+-------------------------------------
+ERROR: Unexpected command, ip: 0
+
+In int MakeReadableCode() (line 60):
+-------------------
+| EXECUTION ERROR |
+-------------------
+File is written successfully
+Finish disassembling
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 --------------------Finish program--------------------

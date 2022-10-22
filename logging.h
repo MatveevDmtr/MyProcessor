@@ -90,6 +90,10 @@ void PrintFatalError(const char* func, int line, const char* text);
 
 void log(const char* format, ...);
 //end prototypes
-
-
+#define LOGGING
+#ifndef LOGGING
+    #define log(format, ...)
 #endif
+
+#endif //guard
+

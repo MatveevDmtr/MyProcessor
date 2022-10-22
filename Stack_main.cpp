@@ -48,52 +48,6 @@ enum ERRCODES
      DECODEERROR          // 22
 };
 
-/*int main3()
-{
-    log("Log file opened\n");
-
-    fprintf(stderr, "Startuem\n");
-
-    stack_t stk1 = StructStackInit(stk1);
-
-    log("Stk1 initialized\n");
-
-    StackDump(&stk1);
-
-    StackCtor(&stk1);
-
-    StackDump(&stk1);
-
-    log("Stack created\n");
-
-    for (size_t i = 0; i < 100; i++)
-    {
-        StackPush(&stk1, i);
-
-        if (i % 10 == 0)
-        {
-            StackDump(&stk1);
-        }
-    }
-
-    for (size_t i = 0; i < 100; i++)
-    {
-        StackPop(&stk1);
-
-        if (i % 10 == 0)
-        {
-            StackDump(&stk1);
-        }
-    }
-
-    StackPop(&stk1);
-
-    StackDump(&stk1);
-
-    StackDtor(&stk1);
-}
-*/
-
 stack_t StructureStackInit(const char* name,
                            const char* func,
                            const char* file,
@@ -468,7 +422,7 @@ int FuckingDump(stack_t* stk,
 
         log("\t data[%0*d] = ", numbers_in_capacity, i);
 
-        if (curr_elem != NULL)
+        if (curr_elem != 0)
         {
             log(specif1, curr_elem);
             log(" = ");
@@ -514,7 +468,7 @@ UnsignedLL CalculateGNUHash(void* start_ptr, size_t num_bytes)
     return hash_sum;
 }
 
-static int UpdateHash(stack_t* stk)
+int UpdateHash(stack_t* stk)
 {
     if (stk == NULL || stk == getPoison(stk))
     {
@@ -533,7 +487,7 @@ static int UpdateHash(stack_t* stk)
 #endif
 
 
-static int StackResize(stack_t* stk, size_t new_capacity)
+int StackResize(stack_t* stk, size_t new_capacity)
 {
     if (StackVerify(stk) > 1)
     {

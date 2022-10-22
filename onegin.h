@@ -103,7 +103,7 @@ int sort_and_write(char* filename,
                type_buf_structs* ptr_arr_structs,
                type_buf_ptrs* ptr_arr_adrs);
 
-FILE* open_Wfile(char* filename);
+FILE* open_Wfile(const char* filename);
 
 int putting_buf_text_to_file(type_buf_ptrs* ptr_arr_structs, FILE* w_file);
 
@@ -111,7 +111,7 @@ int put_line(FILE* w_file, type_prop_line* ptr_line);
 
 int put_buffer(FILE* w_file, type_buf_structs* ptr_arr_structs);
 
-static int is_line_empty(char* ptr_line);
+int is_line_empty(char* ptr_line);
 
 int comparator_straight(const void* line1, const void* line2);
 

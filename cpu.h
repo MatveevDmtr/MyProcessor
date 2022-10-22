@@ -1,6 +1,7 @@
 #ifndef CPU_H_INCLUDED
 #define CPU_H_INCLUDED
 
+//#define TX_NECESSARY
 #include <string.h>
 #include <sys\stat.h>
 #include <ctype.h>
@@ -10,6 +11,9 @@
 #include "stack.h"
 #include "Cpu_Config.h"
 #include "logging.h"
+#include "onegin.h"
+
+#define RUN_MODE
 
 #define DEF_CMD(name, num, arg, ...) \
     case num:                        \
@@ -46,14 +50,15 @@
     free(ptr);                                                      \
 }
 
-
-#include <TXLib.h>
+#ifdef TX_NECESSARY
+    #include <TXLib.h>
+#endif
 
 const int CMD_MASK = 31; /*11111*/
 
 const size_t MAX_LEN_SIGN = 20;
 
-const int ACCURACY = 10000;
+const int ACCURACY = 1000;
 
 enum CPU_ERRORS
 {
@@ -111,7 +116,7 @@ int  checkSign(CPU* cpu, FILE* a_code);
 
 int  getCode(CPU* cpu);
 
-FILE* open_file_rmode(const char* filename);
+size_t ReadVersion(const char* filename);
 
 int Run();
 

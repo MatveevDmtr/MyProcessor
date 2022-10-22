@@ -3,10 +3,19 @@
 
 #include "assembler.h"
 #include "cpu.h"
+#include "disassembler.h"
 
-int main()
+#ifndef LOGGING
+    #define log();
+#endif
+
+int main(int argc, char* argv[])
 {
-    Assemble();
+    Assemble(argc, argv);
 
     Run();
+
+    MakeReadableCode();
+
+    return 0;
 }

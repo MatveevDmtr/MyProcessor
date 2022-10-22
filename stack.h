@@ -1,6 +1,15 @@
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
 
+#define USER_MODE      0
+#define VERIFIER_MODE  1
+#define HASH_MODE      2
+#define HARDDEBUG_MODE 3
+
+#define STACK_MODE HARDDEBUG_MODE
+
+#include "StackConfig.h"
+
 #define StructStackInit(name)                              \
         StructureStackInit(#name,                          \
                            __PRETTY_FUNCTION__,            \
@@ -13,12 +22,11 @@
                         __PRETTY_FUNCTION__,                   \
                         __FILE__,                              \
                         __LINE__);
-#else if
+#else
     #define StackDump(stk);
 #endif
 
 #include <stdio.h>
-#include "StackConfig.h"
 
 typedef int elem_t;
 
@@ -89,7 +97,7 @@ int StackCtor(stack_t* stk);
 
 int StackDtor(stack_t* stk);
 
-static int StackResize(stack_t* stk, size_t new_capacity);
+int StackResize(stack_t* stk, size_t new_capacity);
 
 int StackPush(stack_t* stk, elem_t elem);
 
@@ -98,7 +106,7 @@ elem_t StackPop(stack_t* stk);
 #if STACK_MODE >= HASH_MODE
 UnsignedLL CalculateGNUHash(void* start_ptr, size_t num_bytes);
 
-static int UpdateHash(stack_t* stk);
+int UpdateHash(stack_t* stk);
 #endif
 
 int CheckLeftCannary  (stack_t* stk);

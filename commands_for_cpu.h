@@ -16,6 +16,18 @@
 
 #define SKIP_ARG       {(cpu->ip)++;};
 
+#define COND_JUMP(condition)                                 \
+{                                                            \
+    if (condition)                                           \
+    {                                                        \
+        DO_JUMP;                                             \
+    }                                                        \
+    else                                                     \
+    {                                                        \
+        SKIP_ARG;                                            \
+    }                                                        \
+}
+
 DEF_CMD(HLT, 0, 0,
 {
     printf("Goodbye!\n");
@@ -124,74 +136,32 @@ DEF_CMD(JUMP, 9, 1,
 
 DEF_CMD(JB, 10, 1,
 {
-    if (DO_POP < DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP < DO_POP);
 })
 
 DEF_CMD(JBE, 11, 1,
 {
-    if (DO_POP <= DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP <= DO_POP);
 })
 
 DEF_CMD(JA, 12, 1,
 {
-    if (DO_POP > DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP > DO_POP);
 })
 
 DEF_CMD(JAE, 13, 1,
 {
-    if (DO_POP >= DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP >= DO_POP);
 })
 
 DEF_CMD(JE, 14, 1,
 {
-    if (DO_POP == DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP == DO_POP);
 })
 
 DEF_CMD(JNE, 15, 1,
 {
-    if (DO_POP != DO_POP)
-    {
-        DO_JUMP;
-    }
-    else
-    {
-        SKIP_ARG;
-    }
+    COND_JUMP(DO_POP != DO_POP);
 })
 
 DEF_CMD(DRAW, 18, 0,

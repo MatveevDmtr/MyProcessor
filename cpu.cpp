@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "ProcessorConfig.h"
 
 /*static char* CpuErrorNames[] {
     "Wrong signature",
@@ -64,7 +65,7 @@ int Execute(CPU* cpu)
 
         switch(cpu->code[cpu->ip] & CMD_MASK)
         {
-            #include "commands_for_cpu.h"
+            #include "strcmp_for_asm.h"
 
             default:
 
@@ -174,38 +175,40 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
 {
     int* ptr_RAM = cpu->RAM;
 
-    size_t screen_size = RAM_SIZE + RAM_SIZE / len_line + 1;
-
-    char* screen = allocate_array(char, screen_size);//put {} and move to case
-
-    size_t j = 0; //rename
-
     switch (format)
     {
         case BIN_FORMAT:
+        {
+            size_t screen_size = RAM_SIZE + RAM_SIZE / len_line + 1;
+
+            char* screen = allocate_array(char, screen_size);
+
+            size_t screen_index = 0;
+
             log("start printing in BIN format");
 
             for (size_t i = 0; i < RAM_SIZE; i++)
             {
                 if (i % len_line == 0)
                 {
-                    screen[j] = '\n';
-                    j++;
+                    screen[screen_index] = '\n';
+                    screen_index++;
                 }
 
-                if (ptr_RAM[i])            screen[j] = '#';
+                if (ptr_RAM[i])            screen[screen_index] = '#';
 
-                else                       screen[j] = '.';
+                else                       screen[screen_index] = '.';
 
-                j++;
+                screen_index++;
             }
-            screen[j] = '\0';
+            screen[screen_index] = '\0';
 
             fwrite(screen, sizeof(char), screen_size, stdout);
-            //printf("%s", screen);
-            break;
 
+            break;
+        }
         case SYM_FORMAT:
+        {
             for (size_t i = 0; i < RAM_SIZE; i++)
             {
                 if (i % len_line == 0)     printf("\n");
@@ -213,6 +216,7 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
                 printf("%c", ptr_RAM[i]);
             }
             break;
+        }
 
         default:
             print_log(FRAMED, "FORMAT ERROR: Unexpected format or printing RAM");
@@ -426,12 +430,22 @@ int checkSign(CPU* cpu, FILE* file_asm)
         return WRONG_SIGNATURE;
     }
 
+    size_t right_version = ReadVersion(VERSION_FILE);
+    //you've chosen the wrong door
+    //the proger's club is two blocks down
+    size_t gachi_version = 0;
+
+    fread(&gachi_version, sizeof(int), 1, file_asm);
+
+    if (right_version != gachi_version)
+    {
+        print_log(FRAMED, "VERSION ERROR");
+
+        return -1;
+    }
+
     return 0;
 }
-
-// version control through other file
-
-//in
 
 int getCode(CPU* cpu)
 {
@@ -462,3 +476,5 @@ int getCode(CPU* cpu)
     fclose(file_asm);
 
 }
+
+
