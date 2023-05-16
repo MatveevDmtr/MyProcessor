@@ -35,7 +35,7 @@ void* getPoison (void* /* value */);
 
 unsigned long long* getPoison (unsigned long long* /* value */);
 
-unsigned long long getPoison (unsigned long long /* value */);
+//unsigned long long getPoison (unsigned long long /* value */);
 //finish prototypes
 
 #endif

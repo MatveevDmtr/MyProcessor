@@ -31,7 +31,6 @@ pop rlx
 lbl Picture
 call DrawRT
 call ClearMem
-clear
 
 push rlx
 push 2
@@ -138,6 +137,7 @@ push 1
 add
 call draw_hline
 
+clear
 draw
 ret
 

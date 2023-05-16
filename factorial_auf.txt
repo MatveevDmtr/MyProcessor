@@ -1,0 +1,50 @@
+CALL main
+
+
+name main 0
+lbl main
+push 0
+pop [15]
+IN
+pop [15]
+push [15]
+CALL Факториал
+pop [16]
+push [16]
+OUT
+HLT
+RET
+
+
+
+
+name Факториал 1
+lbl Факториал
+pop [15]
+push 1
+push [15]
+jne if_false0
+
+push 1
+jump end_if0
+
+
+name if_false0 2
+lbl if_false0
+push 0
+pop [16]
+push [15]
+push [15]
+push 1
+SUB
+CALL Факториал
+MUL
+pop [16]
+push [16]
+
+
+name end_if0 3
+lbl end_if0
+RET
+
+

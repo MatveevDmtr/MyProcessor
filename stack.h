@@ -1,7 +1,7 @@
 #ifndef STACK_H_INCLUDED
 #define STACK_H_INCLUDED
 
-#define USER_MODE      0
+//#define USER_MODE      0
 #define VERIFIER_MODE  1
 #define HASH_MODE      2
 #define HARDDEBUG_MODE 3

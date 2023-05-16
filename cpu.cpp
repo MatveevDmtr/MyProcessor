@@ -17,6 +17,8 @@ const size_t RAM_SIZE = 5000;
 
 const size_t REG_SIZE = 30;
 
+const double EPS      = 0.0001;
+
 int Run()
 {
     log("\n----------CPU----------\n");
@@ -42,6 +44,7 @@ int Run()
         print_log(FRAMED, "EXECUTION ERROR");
     }
 
+    log("before CPUDtor\n");
     CPUDtor(&cpu);
 
     log("Finish running\n");
@@ -65,7 +68,7 @@ int Execute(CPU* cpu)
 
         switch(cpu->code[cpu->ip] & CMD_MASK)
         {
-            #include "strcmp_for_asm.h"
+            #include "CodeGeneration.h"
 
             default:
 
@@ -77,8 +80,9 @@ int Execute(CPU* cpu)
         }
 
         cpu->ip++;
-
-        //CPUDump(cpu);
+    #ifdef LOGGING
+        CPUDump(cpu);
+    #endif
     }
 
     log("end of cycle\n");
@@ -166,7 +170,7 @@ int FuckingCPUDump(CPU* cpu,
 
 void SkipNewLines()
 {
-    char sym = 0;
+    char sym = ' ';
 
     while((sym = getchar()) != '\n')            continue;
 }
@@ -223,110 +227,9 @@ int PrintRAM(size_t format, CPU* cpu, size_t len_line)
     }
 
     printf("\n");
+
+    return 0;
 }
-
-/*
-void PushArg(CPU* cpu)
-{
-    log("start push\n");
-
-    size_t cmd_ip = cpu->ip++;
-
-    log("code of push: %d\n", cpu->code[cmd_ip]);
-
-    if (cpu->code[cmd_ip] & ARG_RAM)
-    {
-        int index = 0;
-
-        if (cpu->code[cmd_ip] & ARG_REG)
-        {
-            index += cpu->regs[cpu->code[(cpu->ip)++]];
-        }
-
-        if (cpu->code[cmd_ip] & ARG_IMMED)
-        {
-            index += cpu->code[cpu->ip++];
-        }
-
-        StackPush(cpu->Stk, cpu->RAM[index]);
-    }
-    else
-    {
-        int arg = 0;
-
-        log("push wo RAM\n");
-
-        if (cpu->code[cmd_ip] & ARG_REG)
-        {
-            arg += cpu->regs[cpu->code[(cpu->ip)++]];
-        }
-
-        log("arg after push rcx: %d\n", arg);
-
-        if (cpu->code[cmd_ip] & ARG_IMMED)
-        {
-            arg += cpu->code[cpu->ip++];
-        }
-
-        StackPush(cpu->Stk, arg);
-    }
-
-    cpu->ip--;
-
-    log("finish push\n");
-}
-
-//1 func for push and pop with ptr to location to ...
-int PopArg(CPU* cpu)
-{
-    log("start pop\n");
-
-    int arg = StackPop(cpu->Stk);
-
-    log("cmd_code wo mask in pop: %d\n", cpu->code[cpu->ip]);
-
-    size_t cmd_ip = cpu->ip++;
-
-    int index = 0;
-
-    if (cpu->code[cmd_ip] & ARG_RAM)
-    {
-        if (cpu->code[cmd_ip] & ARG_REG)
-        {
-            index += cpu->regs[cpu->code[(cpu->ip)++]];
-        }
-
-        if (cpu->code[cmd_ip] & ARG_IMMED)
-        {
-            index += cpu->code[cpu->ip++];
-        }
-
-        cpu->RAM[index] = arg;
-    }
-    else
-    {
-        log("pop wo ram\n");
-
-        log("pop code: %d\n", cpu->code[cmd_ip]);
-
-        if (cpu->code[cmd_ip] & ARG_REG)
-        {
-            cpu->regs[cpu->code[(cpu->ip)++]] = arg;
-
-            log("rcxing\n");
-        }
-
-        if (cpu->code[cmd_ip] & ARG_IMMED)
-        {
-            print_log(FRAMED, "SYNTAX ERROR: Invalid usage of function pop");
-        }
-    }
-
-    cpu->ip--;
-
-    log("pop done\n");
-}
-*/
 
 int* GetArg(CPU* cpu)
 {
@@ -338,13 +241,15 @@ int* GetArg(CPU* cpu)
 
     if (cpu->code[cmd_ip] & ARG_RAM)
     {
-        static int index;
+        static int index = 0;
 
         index = 0;
 
         if (cpu->code[cmd_ip] & ARG_REG)
         {
-            index += cpu->regs[cpu->code[(cpu->ip)++]];
+            index += cpu->regs[cpu->code[(cpu->ip)++]] / ACCURACY;
+
+            log("RAM index: %d\n", index);
         }
 
         if (cpu->code[cmd_ip] & ARG_IMMED)
@@ -356,7 +261,7 @@ int* GetArg(CPU* cpu)
     }
     else
     {
-        static int arg;
+        static int arg = 0;
 
         arg = 0;
 
@@ -409,8 +314,14 @@ int CPUDtor(CPU* cpu)
 {
     FREE     (cpu->RAM);
     FREE     (cpu->regs);
+
+    log("before stackDtors\n");
     StackDtor(cpu->Stk);
+    log("between stackDtors\n");
     StackDtor(cpu->StkCalls);
+    log("after stackDtors\n");
+
+    return 0;
 }
 
 int checkSign(CPU* cpu, FILE* file_asm)
@@ -475,6 +386,13 @@ int getCode(CPU* cpu)
 
     fclose(file_asm);
 
+    return 0;
 }
 
+bool is_equal(double x, double y)
+{
+    Assert(isinf(x));
+    Assert(isinf(y));
 
+    return fabs(x - y) < EPS;
+}

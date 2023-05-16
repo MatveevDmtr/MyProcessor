@@ -144,7 +144,7 @@ int Disassemble(disasm_t* disasm)
 
         switch(disasm->asm_code[disasm->ip] & CMD_MASK)
         {
-            #include "strcmp_for_asm.h"
+            #include "CodeGeneration.h"
 
             default:
 
@@ -222,6 +222,10 @@ int getCodeForDisasm(disasm_t* disasm)
     Assert(file_asm == NULL);
 
     if (checkSignDisasm(disasm, file_asm))    return -1;
+
+    size_t version = 0;
+
+    fread(&version, sizeof(int), 1, file_asm);
 
     fread(&disasm->Size, sizeof(int), 1, file_asm);
 

@@ -60,7 +60,7 @@ unsigned long long* getPoison (unsigned long long* /* value */)
     return (unsigned long long*)BAAD_FOOD;
 }
 
-unsigned long long getPoison (unsigned long long /* value */)
-{
-    return (unsigned long long)BAAD_FOOD;
-}
+//unsigned long long getPoison (unsigned long long /* value */)
+//{
+//    return (unsigned long long)BAAD_FOOD;
+//}

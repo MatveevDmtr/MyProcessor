@@ -1,5 +1,9 @@
+//#include <TXLib.h>
 #include "assembler.h"
 #include "ProcessorConfig.h"
+#define LOGGING
+
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 
 #define DEF_CMD(name, num, arg, ...) \
     else if (!stricmp(cmd, #name))   \
@@ -13,17 +17,17 @@ const char*  VERSION_FILE     = "version.txt";
 
 size_t       VERSION_REPEAT   = 1024;
 
-const size_t MAX_LEN_CMD      = 30;
+const size_t MAX_LEN_CMD      = 40;
 
 const size_t MAX_NUM_LABELS   = 30;
 
-const size_t MAX_LEN_REG_NAME = 5;
+const size_t MAX_LEN_REG_NAME = 10;
 
 const char*  ASM_FILE_NAME    = "ASM.txt";
 
 const char*  SIGNATURE        = "MDA";
 
-char*        INPUT_FILE_NAME  = "square_equation.txt";
+const char*  INPUT_FILE_NAME  = "factorial_auf.txt";
 //end constants
 
 
@@ -32,8 +36,8 @@ int Assemble(int argc, char** argv)
 {
     handle_cmd_args(argc, argv);
 
-    type_buf_char      user_code         = {NULL, 0, 0};
-    type_buf_structs   arr_structs       = {NULL, 0   };
+    type_buf_char      user_code         = {NULL};
+    type_buf_structs   arr_structs       = {};
 
     label_field labels[MAX_NUM_LABELS] = {};
 
@@ -102,7 +106,7 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
             log("Never gonna give you up");
         }
 
-        #include "strcmp_for_asm.h"
+        #include "CodeGeneration.h"
 
         else
         {
@@ -186,7 +190,7 @@ int FuncName(char*        ptr_arg,
 
     SkipSpace(&ptr_arg);
 
-    size_t num_label = -1;
+    int num_label = -1;
 
     char label_name[MAX_LEN_LABEL_NAME] = {};
 
@@ -562,7 +566,7 @@ int get_file_size(FILE* file)
 {
     Assert(file == NULL);
 
-    struct stat buf;
+    struct stat buf = {};
 
     int errcode = fstat(fileno(file), &buf);
 

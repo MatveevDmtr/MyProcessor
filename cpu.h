@@ -1,7 +1,7 @@
 #ifndef CPU_H_INCLUDED
 #define CPU_H_INCLUDED
 
-//#define TX_NECESSARY
+#define TX_NECESSARY
 #include <string.h>
 #include <sys\stat.h>
 #include <ctype.h>
@@ -50,9 +50,9 @@
     free(ptr);                                                      \
 }
 
-#ifdef TX_NECESSARY
+/*#ifdef TX_NECESSARY
     #include <TXLib.h>
-#endif
+#endif*/
 
 const int CMD_MASK = 31; /*11111*/
 
@@ -117,6 +117,8 @@ int  checkSign(CPU* cpu, FILE* a_code);
 int  getCode(CPU* cpu);
 
 size_t ReadVersion(const char* filename);
+
+bool is_equal(double x, double y);
 
 int Run();
 

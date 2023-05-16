@@ -97,7 +97,7 @@ void PrintFatalError(const char* func, int line, const char* text)
 
     fputc('\n', LOG_FILE);
 
-    log("| %s |\n", text);
+    fprintf(LOG_FILE, "| %s |\n", text);
 
     for (size_t i = 0; i < len_text + 4; i++)
     {
@@ -109,7 +109,28 @@ void PrintFatalError(const char* func, int line, const char* text)
     fflush(LOG_FILE);
 }
 
-#undef log(format, ...)
+void FramedConsoleError(const char* text)
+{
+    int len_text = strlen(text);
+
+    for (size_t i = 0; i < len_text + 4; i++)
+    {
+        putc('-', stdout);
+    }
+
+    putc('\n', stdout);
+
+    printf("| %s |\n", text);
+
+    for (size_t i = 0; i < len_text + 4; i++)
+    {
+        putc('-', stdout);
+    }
+
+    putc('\n', stdout);
+}
+
+#ifdef LOGGING
 void log(const char* format, ...)
 {
     va_list args;
@@ -122,4 +143,4 @@ void log(const char* format, ...)
 
     va_end(args);
 }
-;
+#endif

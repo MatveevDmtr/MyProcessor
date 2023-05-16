@@ -92,7 +92,7 @@ UnsignedLL FindErrors(stack_t* stk)
 
     if (stk == NULL || stk == getPoison(stk))           sum_errcodes += 1 << SEGFAULT;
     if (stk->DeadInside)                                sum_errcodes += 1 << ZOMBIE;
-    if (stk->Ptr <= NULL)                               sum_errcodes += 1 << NULLPTR;
+    if (stk->Ptr == NULL)                               sum_errcodes += 1 << NULLPTR;
     if (stk->Ptr == (elem_t*)getPoison(stk->Ptr))       sum_errcodes += 1 << PTRPOISONED;
     if (stk->Size == getPoison(stk->Size))              sum_errcodes += 1 << SIZEPOISONED;
     if (stk->Capacity <= 0)                             sum_errcodes += 1 << NEGCAP;
@@ -629,8 +629,9 @@ int StackDtor(stack_t* stk)
     stk->StructRightCannary = getPoison(stk->StructRightCannary);
 
     *stk->PtrStackRightBird = getPoison(*stk->PtrStackRightBird);
-
-    free(stk->Ptr);
+    log("before free\n");
+    //free(stk->Ptr);
+    log("after free\n");
 
     return 0;
 }

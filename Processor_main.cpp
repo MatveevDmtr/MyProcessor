@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     Run();
 
-    MakeReadableCode();
+    //MakeReadableCode();
 
     return 0;
 }
