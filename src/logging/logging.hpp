@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LOGGING
 
 enum LOG_MODES
 {
@@ -24,14 +23,19 @@ enum LOG_MODES
     FILE_FUNC_N_LINE = 4
 };
 
+#ifdef LOGGING
 #define Assert(condition)                                  \
 {                                                          \
     if(condition)                                          \
-    {   print_log(FRAMED, "ASSERTION ERROR");              \
+    {                                                      \
+        print_log(FRAMED, "Assertion ERROR");              \
         log("In line %d in \n%s \nFound (%s).\n",          \
                 __LINE__, __FILE__, #condition);           \
     }                                                      \
 }
+#else
+    #define Assert(condition)
+#endif
 
 #define LogError(errcode)                                         \
     {                                                             \
@@ -43,7 +47,9 @@ enum LOG_MODES
         fprintf_log(FRAMED, text, func, line);                    \
     }
 
-#define print_log(mode, text)  {switch (mode)                       \
+#define print_log(mode, text)                                       \
+{                                                                   \
+    switch (mode)                                                   \
     {                                                               \
         case SIMPLE:                                                \
             fprintf_log(mode, text);                                \
@@ -80,18 +86,17 @@ FILE* open_log();
 
 void close_log();
 
-int fprintf_log(size_t mode, const char* text, ...);
+void fprintf_log(size_t mode, const char* text, ...);
 
 void PrintFatalError(const char* func, int line, const char* text);
 
-void FramedConsoleError(const char* text);
-
 void log(const char* format, ...);
 //end prototypes
-
-#ifndef LOGGING
-    #define log(format, ...)
-#endif
+//#define LOGGING
+//#ifndef LOGGING
+    //#define log(format, ...)
+//#elseif
+    //#define log(format, ...) log_()
+//#endif
 
 #endif //guard
-

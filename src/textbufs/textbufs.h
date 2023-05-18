@@ -63,7 +63,7 @@ int make_pointers_to_lines(type_buf_char* ptr_text_buf,
 int create_array_structs(type_buf_char*    ptr_text_buf,
                      type_buf_structs* ptr_arr_structs);
 
-int get_file_size(FILE* file);
+size_t GetFileSize(FILE* file);
 
 int count_lines(type_buf_char* ptr_text_buf);
 

@@ -3,8 +3,8 @@
 
 #include <math.h>
 
-#include "logging.h"
-#include "StackConfig.h"
+#include "../logging/logging.hpp"
+#include "../Stack/StackConfig.h"
 
 
 const size_t BAAD_FOOD = 0xBAADF00D;
@@ -32,6 +32,10 @@ double* getPoison (double* /* value */);
 char** getPoison (char** /* value */);
 
 void* getPoison (void* /* value */);
+
+// void* getPoison (bird_t* /* value */);
+
+void* getPoison (bird_t /* value */);
 
 unsigned long long* getPoison (unsigned long long* /* value */);
 

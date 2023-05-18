@@ -55,6 +55,16 @@ void* getPoison (void* /* value */)
     return (void*)BAAD_FOOD;
 }
 
+// void* getPoison (bird_t* /* value */)
+// {
+//     return (bird_t*)BAAD_FOOD;
+// }
+
+void* getPoison (bird_t /* value */)
+{
+    return 0;
+}
+
 unsigned long long* getPoison (unsigned long long* /* value */)
 {
     return (unsigned long long*)BAAD_FOOD;

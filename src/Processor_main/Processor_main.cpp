@@ -1,9 +1,9 @@
 #include <stdio.h>
 //#include <TXLib.h>
 
-#include "assembler.h"
-#include "cpu.h"
-#include "disassembler.h"
+#include "../Assembler/assembler.h"
+#include "../cpu/cpu.h"
+#include "../Disassembler/disassembler.h"
 
 #ifndef LOGGING
     #define log();
@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     Run();
 
-    //MakeReadableCode();
+    MakeReadableCode();
 
     return 0;
 }

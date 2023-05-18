@@ -1,5 +1,5 @@
 #include "cpu.h"
-#include "ProcessorConfig.h"
+#include "../Processor_main/ProcessorConfig.h"
 
 /*static char* CpuErrorNames[] {
     "Wrong signature",
@@ -11,7 +11,7 @@
 
 
 const char* CPU_SIGNATURE  = "MDA";
-const char* NAME_FILE_CODE = "ASM.txt";
+const char* NAME_FILE_CODE = "result/bytecodes/ASM.txt";
 
 const size_t RAM_SIZE = 5000;
 
@@ -68,7 +68,7 @@ int Execute(CPU* cpu)
 
         switch(cpu->code[cpu->ip] & CMD_MASK)
         {
-            #include "CodeGeneration.h"
+            #include "../codegen/CodeGeneration.h"
 
             default:
 

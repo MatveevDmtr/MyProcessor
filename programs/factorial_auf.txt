@@ -8,7 +8,7 @@ pop [15]
 IN
 pop [15]
 push [15]
-CALL Факториал
+CALL 
 pop [16]
 push [16]
 OUT
@@ -18,8 +18,8 @@ RET
 
 
 
-name Факториал 1
-lbl Факториал
+name  1
+lbl 
 pop [15]
 push 1
 push [15]
@@ -37,7 +37,7 @@ push [15]
 push [15]
 push 1
 SUB
-CALL Факториал
+CALL 
 MUL
 pop [16]
 push [16]

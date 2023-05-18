@@ -1,6 +1,6 @@
-#include "cpu.h"
+#include "../cpu/cpu.h"
 #include "disassembler.h"
-#include "onegin.h"
+#include "../textbufs/textbufs.h"
 
 #undef DEF_CMD
 
@@ -14,12 +14,10 @@
                 PutStackCmd(disasm);                      \
                 break;                                    \
             case 1:                                       \
-                disasm->ip++;                             \
                 WRITE_NUMBER;                             \
                 break;                                    \
             default:                                      \
                 log("No argument of cmd\n");              \
-                disasm->ip++;                             \
         }                                                 \
         disasm->buf_code[disasm->cursor++] = '\n';        \
     break;
@@ -28,7 +26,7 @@
 {                                                         \
                                                           \
         PutNumToCharBuf(disasm);                          \
-}
+}PutNumToCharBuf
 
 //#include <TXLib.h>
 
@@ -39,7 +37,7 @@
 
 const char* DISASM_SIGNATURE = "MDA";
 
-const char* ASM_FILE_NAME_DISASM = "ASM.txt";
+const char* ASM_FILE_NAME_DISASM = "result/bytecodes/ASM.txt";
 
 const int MAX_LEN_CMD = 6;
 
@@ -60,7 +58,7 @@ int MakeReadableCode()
         print_log(FRAMED, "EXECUTION ERROR");
     }
 
-    WriteUserCode(&disasm, "Disassembled.txt");
+    WriteUserCode(&disasm, "result/Disassembled.txt");
 
     log("Finish disassembling\n");
 
@@ -71,11 +69,13 @@ int PutCmd(disasm_t* disasm, const char* cmd_name)
 {
     strcpy(disasm->buf_code + disasm->cursor, cmd_name);
 
-    log("finish strcpy\n");
+    log("finish strcpy of %s\n", cmd_name);
 
     disasm->cursor += strlen(cmd_name);
 
     disasm->buf_code[disasm->cursor++] = ' ';
+
+    disasm->ip++; //experiment
 
     return 0;
 }
@@ -97,9 +97,13 @@ int HandleRegsDisasm(disasm_t* disasm, size_t reg_num)
 
 int PutNumToCharBuf(disasm_t* disasm)
 {
-    char* line = itoa((disasm->asm_code)[disasm->ip++], disasm->buf_code + disasm->cursor, 10);
+    char line[5] = {};
+    snprintf(line, 5, "%d", (disasm->asm_code)[disasm->ip]);
+    strncpy(disasm->buf_code + disasm->cursor, line, 5);
 
     disasm->cursor += strlen(line);
+
+    disasm->ip++;
 
     return 0;
 }
@@ -108,7 +112,7 @@ int PutStackCmd(disasm_t* disasm)
 {
     log("start PutStackArg\n");
 
-    size_t cmd_ip = disasm->ip++;
+    size_t cmd_ip = disasm->ip - 1; //experiment
 
     log("code of push: %d\n", disasm->asm_code[cmd_ip]);
 
@@ -140,11 +144,12 @@ int Disassemble(disasm_t* disasm)
 
     while (disasm->ip < disasm->Size)
     {
-        log("cmd_code wo mask: %d\n", disasm->asm_code[disasm->ip]);
+        log("disasm ip: %d\n", disasm->ip);
+        log("cmd_code wo mask: %x\n", disasm->asm_code[disasm->ip]);
 
         switch(disasm->asm_code[disasm->ip] & CMD_MASK)
         {
-            #include "CodeGeneration.h"
+            #include "../codegen/CodeGeneration.h"
 
             default:
 

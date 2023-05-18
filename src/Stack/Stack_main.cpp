@@ -6,11 +6,11 @@
 #include <math.h>
 //#include <TXLib.h>
 
-#include "logging.h"
-#include "StackConfig.h"
-#include "stack.h"
-#include "GetPoison.h"
-#include "specificators.h"
+#include "../logging/logging.hpp"
+#include "../Stack/StackConfig.h"
+#include "../Stack/stack.h"
+#include "../GetPoison/GetPoison.h"
+#include "../specificators/specificators.h"
 
 
 
@@ -65,8 +65,8 @@ stack_t StructureStackInit(const char* name,
         .Size              = getPoison(Size),
         .Capacity          = getPoison(Capacity),
         .DeadInside        = 1,
-        .PtrStackLeftBird  = getPoison(PtrStackCannary),
-        .PtrStackRightBird = getPoison(PtrStackCannary),
+        .PtrStackLeftBird  = 0, //getPoison(PtrStackCannary),
+        .PtrStackRightBird = 0, //getPoison(PtrStackCannary),
 
     #if STACK_MODE >= HASH_MODE
         .StackHashSum         = 0,
@@ -623,12 +623,12 @@ int StackDtor(stack_t* stk)
     stk->StructHashSum = CalculateGNUHash(stk, sizeof(stk));
 #endif
 
-    *stk->PtrStackLeftBird  = getPoison(*stk->PtrStackLeftBird);
+    //*stk->PtrStackLeftBird  = getPoison(*stk->PtrStackLeftBird);
 
-    stk->StructLeftCannary  = getPoison(stk->StructLeftCannary );
-    stk->StructRightCannary = getPoison(stk->StructRightCannary);
+    //stk->StructLeftCannary  = getPoison(stk->StructLeftCannary );
+    //    printf("start\n");stk->StructRightCannary = getPoison(stk->StructRightCannary);
 
-    *stk->PtrStackRightBird = getPoison(*stk->PtrStackRightBird);
+    //*stk->PtrStackRightBird = getPoison(*stk->PtrStackRightBird);
     log("before free\n");
     //free(stk->Ptr);
     log("after free\n");

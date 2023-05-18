@@ -1,19 +1,19 @@
 //#include <TXLib.h>
-#include "assembler.h"
-#include "ProcessorConfig.h"
+#include "../Assembler/assembler.h"
+#include "../Processor_main/ProcessorConfig.h"
 #define LOGGING
 
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 
 #define DEF_CMD(name, num, arg, ...) \
-    else if (!stricmp(cmd, #name))   \
+    else if (!strcasecmp(cmd, #name))   \
         {                            \
             cmd_code = num;          \
             __VA_ARGS__              \
         }                            \
 
 //start constants
-const char*  VERSION_FILE     = "version.txt";
+const char*  VERSION_FILE     = "result/version.txt";
 
 size_t       VERSION_REPEAT   = 1024;
 
@@ -23,17 +23,19 @@ const size_t MAX_NUM_LABELS   = 30;
 
 const size_t MAX_LEN_REG_NAME = 10;
 
-const char*  ASM_FILE_NAME    = "ASM.txt";
+const char*  ASM_FILE_NAME    = "result/bytecodes/ASM.txt";
 
 const char*  SIGNATURE        = "MDA";
 
-const char*  INPUT_FILE_NAME  = "factorial_auf.txt";
+const char*  INPUT_FILE_NAME  = "programs/factorial_auf.txt";
 //end constants
 
 
 
 int Assemble(int argc, char** argv)
 {
+    log("\n\n--------------------Assembler--------------------\n");
+
     handle_cmd_args(argc, argv);
 
     type_buf_char      user_code         = {NULL};
@@ -42,6 +44,8 @@ int Assemble(int argc, char** argv)
     label_field labels[MAX_NUM_LABELS] = {};
 
     asm_t asm_code = {NULL, 0, 0, labels};
+
+    log("try to read file\n");
 
     read_file(INPUT_FILE_NAME, &user_code, &arr_structs);
 
@@ -106,7 +110,7 @@ int UserCodeToASM(type_buf_char*    ptr_user_code,
             log("Never gonna give you up");
         }
 
-        #include "CodeGeneration.h"
+        #include "../codegen/CodeGeneration.h"
 
         else
         {
@@ -422,7 +426,7 @@ int read_file(const char* filename,
 
     if (!text_file)    return -1;
 
-    ptr_text_buf->Size = safe_def_int(get_file_size(text_file) + 1, 1);
+    ptr_text_buf->Size = safe_def_int(GetFileSize(text_file) + 1, 1);
 
     log("Size of file is: %d bytes.\n", ptr_text_buf->Size);
 
@@ -503,8 +507,7 @@ int create_array_structs(type_buf_char*    ptr_text_buf,
         {
             if (!is_line_empty(ptr_prev_line))
             {
-                (ptr_arr_structs->Ptr)[index_line] = {ptr_prev_line,
-                                                     (ptr_text_buf->Ptr) + i - ptr_prev_line};
+                (ptr_arr_structs->Ptr)[index_line] = {ptr_prev_line, (ptr_text_buf->Ptr - ptr_prev_line) + i};
 
                 index_line++;
             }
@@ -562,27 +565,27 @@ int is_line_empty(char* ptr_line)
 }
 
 
-int get_file_size(FILE* file)
+size_t GetFileSize(FILE* file)
 {
     Assert(file == NULL);
+    
+    fseek(file, 0, SEEK_END);
 
-    struct stat buf = {};
+    size_t size = ftell(file);
 
-    int errcode = fstat(fileno(file), &buf);
+    fseek(file, 0, SEEK_SET);
 
-    Assert(errcode != 0);
+    log("File size = %d\n", size);
 
-    printf("File size = %d\n", (int)buf.st_size);
-
-    return buf.st_size;
+    return size;
 }
 
 bool isletter(char sym)
 {
     if (('a' <= sym && sym <= 'z') ||
         ('A' <= sym && sym <= 'Z') ||
-        ('à' <= sym && sym <= 'ÿ') ||
-        ('À' <= sym && sym <= 'ß'))
+        ('ï¿½' <= sym && sym <= 'ï¿½') ||
+        ('ï¿½' <= sym && sym <= 'ï¿½'))
     {
         return true;
     }

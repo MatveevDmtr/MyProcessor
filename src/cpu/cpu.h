@@ -3,15 +3,15 @@
 
 #define TX_NECESSARY
 #include <string.h>
-#include <sys\stat.h>
+//#include <sys\stat.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <math.h>
 
-#include "stack.h"
+#include "../Stack/stack.h"
 #include "Cpu_Config.h"
-#include "logging.h"
-#include "onegin.h"
+#include "../logging/logging.hpp"
+#include "../textbufs/textbufs.h"
 
 #define RUN_MODE
 
@@ -58,7 +58,7 @@ const int CMD_MASK = 31; /*11111*/
 
 const size_t MAX_LEN_SIGN = 20;
 
-const int ACCURACY = 1000;
+const int ACCURACY = 1;
 
 enum CPU_ERRORS
 {

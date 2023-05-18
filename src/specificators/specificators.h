@@ -1,7 +1,7 @@
 #ifndef SPECIFICATORS_H_INCLUDED
 #define SPECIFICATORS_H_INCLUDED
 
-#include "StackConfig.h"
+#include "../Stack/StackConfig.h"
 
 //start prototypes
 //int

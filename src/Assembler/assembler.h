@@ -3,15 +3,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
+//#include <sys/stat.h>
 #include <ctype.h>
 #include <math.h>
 
-#include "onegin.h"
-#include "stack.h"
-#include "logging.h"
-#include "StackConfig.h"
-#include "Cpu_Config.h"
+#include "../textbufs/textbufs.h"
+#include "../Stack/stack.h"
+#include "../logging/logging.hpp"
+#include "../Stack/StackConfig.h"
+#include "../cpu/Cpu_Config.h"
 
 
 #define FREE(ptr)                                                   \

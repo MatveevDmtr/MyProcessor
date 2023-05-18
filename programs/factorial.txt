@@ -13,7 +13,6 @@ copy
 push 1
 je if_one
 
-pop
 copy
 push -1
 add
@@ -26,6 +25,5 @@ ret
 
 
 lbl if_one
-pop
 pop rcx
 jump end

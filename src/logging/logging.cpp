@@ -1,7 +1,6 @@
-#include "logging.h"
+#include "logging.hpp"
 
 static FILE* LOG_FILE = open_log();
-
 
 //start describing functions
 FILE* open_log()
@@ -11,12 +10,13 @@ FILE* open_log()
     if (log_file == NULL)
     {
         fprintf(stderr, "ERROR: log file not found while opening\n");
-
         return NULL;
     }
 
     fprintf(log_file, "\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n"
                           "--------------------Start program--------------------\n");
+
+
     atexit(close_log);
 
     return log_file;
@@ -39,11 +39,11 @@ void close_log()
     }
 }
 
-int fprintf_log(size_t mode, const char* text, ...)
+void fprintf_log(size_t mode, const char* text, ...)
 {
     va_list params;
 
-    va_start(params, mode);
+    va_start(params, text);
 
     const char* func = "";
 
@@ -86,9 +86,9 @@ void PrintFatalError(const char* func, int line, const char* text)
 {
     int len_text = strlen(text);
 
-    log("\nIn %s ", func);
+    fprintf(LOG_FILE, "\nIn %s ", func);
 
-    log("(line %d):\n", line);
+    fprintf(LOG_FILE, "(line %d):\n", line);
 
     for (size_t i = 0; i < len_text + 4; i++)
     {
@@ -109,30 +109,10 @@ void PrintFatalError(const char* func, int line, const char* text)
     fflush(LOG_FILE);
 }
 
-void FramedConsoleError(const char* text)
-{
-    int len_text = strlen(text);
-
-    for (size_t i = 0; i < len_text + 4; i++)
-    {
-        putc('-', stdout);
-    }
-
-    putc('\n', stdout);
-
-    printf("| %s |\n", text);
-
-    for (size_t i = 0; i < len_text + 4; i++)
-    {
-        putc('-', stdout);
-    }
-
-    putc('\n', stdout);
-}
-
-#ifdef LOGGING
+#undef log
 void log(const char* format, ...)
 {
+#ifdef LOGGING
     va_list args;
 
     va_start (args, format);
@@ -142,5 +122,5 @@ void log(const char* format, ...)
     fflush(LOG_FILE);
 
     va_end(args);
-}
 #endif
+}
